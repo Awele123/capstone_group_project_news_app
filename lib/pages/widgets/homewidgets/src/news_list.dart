@@ -32,7 +32,7 @@ class NewsList extends StatelessWidget {
                   Image.asset(
                     HomeImages.tinubu,
                     width: size.width * 0.27,
-                    height: size.width * 0.23,
+                    height: size.width * 0.27,
                     fit: BoxFit.cover,
                   ),
             ),

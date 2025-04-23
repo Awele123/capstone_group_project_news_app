@@ -1,7 +1,8 @@
 import 'package:capstone_news_app/pages/authentication/sign_in.dart';
+import 'package:capstone_news_app/pages/authentication/sign_up.dart';
 import 'package:capstone_news_app/pages/home/homepage.dart';
 import 'package:capstone_news_app/pages/widgets/homewidgets/src/bottom_nav.dart';
-import 'package:capstone_news_app/pages/widgets/homewidgets/src/politics_details.dart';
+import 'package:capstone_news_app/pages/widgets/homewidgets/src/news_details.dart';
 import 'package:capstone_news_app/route/routename.dart';
 import 'package:flutter/material.dart';
 
@@ -10,6 +11,8 @@ class Routes {
     switch (settings.name) {
       case RouteName.homePage:
         return MaterialPageRoute(builder: (_) => const Homepage());
+      case RouteName.signUp:
+        return MaterialPageRoute(builder: (_) => const SignupScreen());
       case RouteName.signIn:
         return MaterialPageRoute(builder: (_) => const SignIn());
       case RouteName.bottomNav:

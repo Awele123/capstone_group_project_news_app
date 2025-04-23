@@ -22,16 +22,17 @@ class _BuildImageState extends State<BuildImage> {
   Widget build(BuildContext context) {
     final size = MediaQuery.sizeOf(context);
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: size.width * 0.05),
+      padding: EdgeInsets.symmetric(horizontal: size.width * 0.06),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(size.width * 0.08),
         child: Container(
           width: size.width,
+          height: size.height * 0.29,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(size.width * 0.08),
             image: DecorationImage(
               image: AssetImage(widget.image),
-              fit: BoxFit.cover,
+              fit: BoxFit.fill,
             ),
           ),
           child: Column(

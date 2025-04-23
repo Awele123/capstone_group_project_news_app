@@ -1,6 +1,7 @@
 import 'package:capstone_news_app/constants/app_colors.dart';
 import 'package:capstone_news_app/constants/home_images.dart';
 import 'package:capstone_news_app/global_widgets/app_text.dart';
+import 'package:capstone_news_app/route/routename.dart';
 import 'package:flutter/material.dart';
 
 class NewsDetails extends StatefulWidget {
@@ -51,30 +52,24 @@ class _NewsDetailsState extends State<NewsDetails> {
                   image: widget.imageheader ?? AssetImage(HomeImages.tinubu),
                   fit: BoxFit.cover,
                   colorFilter: ColorFilter.mode(
-                      Colors.black.withOpacity(0.3), BlendMode.darken),
+                      Colors.black.withOpacity(0.1), BlendMode.darken),
                 ),
               ),
               child: Padding(
                 padding: EdgeInsets.only(
-                    top: size.height * 0.01, left: size.width * 0.04),
+                    top: size.height * 0.04, left: size.width * 0.04),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Align(
                       alignment: Alignment.topLeft,
                       child: GestureDetector(
-                        onTap: () => Navigator.pop(context, isBookmarked),
-                        child: Container(
-                          padding: EdgeInsets.all(8),
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: Colors.black.withOpacity(0.5),
-                          ),
-                          child: Icon(
-                            Icons.arrow_back_ios_new_rounded,
-                            color: Colors.white,
-                            size: 20,
-                          ),
+                        onTap: () =>
+                            Navigator.pushNamed(context, RouteName.bottomNav),
+                        child: Icon(
+                          Icons.arrow_back,
+                          color: Colors.white,
+                          size: 20,
                         ),
                       ),
                     ),
