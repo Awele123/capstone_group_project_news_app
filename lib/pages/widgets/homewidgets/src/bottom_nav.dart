@@ -1,6 +1,7 @@
 import 'package:capstone_news_app/constants/app_colors.dart';
 import 'package:capstone_news_app/constants/nav_images.dart';
 import 'package:capstone_news_app/pages/home/homepage.dart';
+import 'package:capstone_news_app/pages/search/search.dart';
 import 'package:flutter/material.dart';
 
 class BottomNav extends StatefulWidget {
@@ -74,7 +75,7 @@ class _BottomNavState extends State<BottomNav> {
       case 0:
         return Homepage();
       case 1:
-        return Center(child: Text('Search Page'));
+        return Search();
       case 2:
         return Center(child: Text('Bookmarks'));
       case 3:

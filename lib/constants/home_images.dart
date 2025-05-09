@@ -7,6 +7,8 @@ class HomeImages {
   static const vanLogo = 'assets/home/VanLogo.png';
   static const bolaAhmed = 'assets/home/bolaAhmed.png';
   static const tinubu = 'assets/home/tinubu.jpeg';
+  static const joe = 'assets/home/joe.jpg';
+  
 }
 
 int activeIndex = 0;
