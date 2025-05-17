@@ -24,67 +24,70 @@ class NewsList extends StatelessWidget {
         onTap: () {
           onTap ?? Navigator.pushNamed(context, RouteName.politics);
         },
-        child: Row(
-          children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(size.width * 0.04),
-              child: image ??
-                  Image.asset(
-                    HomeImages.tinubu,
-                    width: size.width * 0.27,
-                    height: size.width * 0.27,
-                    fit: BoxFit.cover,
-                  ),
-            ),
-            SizedBox(
-              width: size.width * 0.03,
-            ),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  AppText(
-                    text: heading ?? 'Politics',
-                    textSize: 14,
-                    color: AppColors.lightGreyColor,
-                  ),
-                  SizedBox(
-                    height: size.height * 0.02,
-                  ),
-                  AppText(
-                    text: subheading ??
-                        'President Tinubu jets to Paris amid threatening insecurities in Nigeria',
-                    textSize: 16,
-                    maxline: 3,
-                    fontWeight: FontWeight.bold,
-                  ),
-                  SizedBox(
-                    height: size.height * 0.02,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      AppText(
-                        maxline: 3,
-                        text: newSource ?? 'The Vanguard',
-                        textSize: 14,
-                        color: AppColors.lightGreyColor,
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(right: size.width * 0.08),
-                        child: AppText(
-                          maxline: 3,
-                          text: time ?? '24hrs ago',
+        child: Container(
+          height: size.width * 0.27,
+          child: Row(
+            children: [
+              ClipRRect(
+                borderRadius: BorderRadius.circular(size.width * 0.04),
+                child: image ??
+                    Image.asset(
+                      HomeImages.tinubu,
+                      width: size.width * 0.27,
+                      height: size.width * 0.27,
+                      fit: BoxFit.cover,
+                    ),
+              ),
+              SizedBox(
+                width: size.width * 0.03,
+              ),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    AppText(
+                      text: heading ?? 'Politics',
+                      textSize: 14,
+                      color: AppColors.lightGreyColor,
+                    ),
+                    SizedBox(
+                      height: size.height * 0.01,
+                    ),
+                    AppText(
+                      text: subheading ??
+                          'President Tinubu jets to Paris amid threatening insecurities in Nigeria',
+                      textSize: 16,
+                      maxline: 2,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    SizedBox(
+                      height: size.height * 0.01,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        AppText(
+                          maxline: 2,
+                          text: newSource ?? 'The Vanguard',
                           textSize: 14,
                           color: AppColors.lightGreyColor,
                         ),
-                      ),
-                    ],
-                  ),
-                ],
+                        Padding(
+                          padding: EdgeInsets.only(right: size.width * 0.08),
+                          child: AppText(
+                            maxline: 2,
+                            text: time ?? '24hrs ago',
+                            textSize: 14,
+                            color: AppColors.lightGreyColor,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
-            )
-          ],
+            ],
+          ),
         ),
       ),
     );

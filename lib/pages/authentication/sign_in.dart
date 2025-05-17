@@ -46,7 +46,6 @@ class _SignInState extends State<SignIn> {
     final authCubit = context.read<AuthCubit>();
     final email = authCubit.emailcontroller.text.trim();
     final password = authCubit.passwordcontroller.text.trim();
-
     final emailValidation = AuthValidators.validateEmail(email);
     final passwordValidation = AuthValidators.validatePassword(password);
 
@@ -92,10 +91,8 @@ class _SignInState extends State<SignIn> {
                         ],
                       ),
 
-                      // Image
                       Image.asset(AuthImages.newsguy, height: size.width * 0.7),
 
-                      // Email Field
                       AppTextField(
                         controller: context.read<AuthCubit>().emailcontroller,
                         text: 'Email',
@@ -115,7 +112,6 @@ class _SignInState extends State<SignIn> {
 
                       SizedBox(height: size.height * 0.02),
 
-                      // Password Field
                       AppTextField(
                         text: 'Password',
                         controller:
@@ -144,7 +140,6 @@ class _SignInState extends State<SignIn> {
 
                       SizedBox(height: size.height * 0.03),
 
-                      // Login Button
                       AppButton(
                         onTap: isValidated
                             ? () => context.read<AuthCubit>().login()
@@ -155,7 +150,6 @@ class _SignInState extends State<SignIn> {
                             : const Color.fromARGB(248, 230, 230, 230),
                       ),
 
-                      // Forgot password text
                       Padding(
                         padding: EdgeInsets.only(top: size.width * 0.02),
                         child: Row(
@@ -170,7 +164,6 @@ class _SignInState extends State<SignIn> {
                         ),
                       ),
 
-                      // Register prompt
                       Padding(
                         padding: EdgeInsets.only(top: size.width * 0.07),
                         child: RichText(

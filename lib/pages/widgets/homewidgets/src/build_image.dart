@@ -22,7 +22,7 @@ class _BuildImageState extends State<BuildImage> {
   Widget build(BuildContext context) {
     final size = MediaQuery.sizeOf(context);
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: size.width * 0.06),
+      padding: EdgeInsets.symmetric(horizontal: size.width * 0.03),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(size.width * 0.08),
         child: Container(

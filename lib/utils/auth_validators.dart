@@ -1,5 +1,4 @@
 class AuthValidators {
-  /// Name must be at least 2 characters and contain only letters and spaces
   static String? validateName(String? value) {
     if (value == null || value.trim().isEmpty) {
       return 'Kindly provide your name';
@@ -11,7 +10,6 @@ class AuthValidators {
     return null;
   }
 
-  /// Email format validation
   static String? validateEmail(String? value) {
     if (value == null || value.trim().isEmpty) {
       return 'Kindly provide your email';
@@ -23,7 +21,6 @@ class AuthValidators {
     return null;
   }
 
-  /// Password must be at least 8 characters, include a number, uppercase, lowercase, and special character
   static String? validatePassword(String? value) {
     if (value == null || value.isEmpty) {
       return 'Kindly provide your password';
@@ -36,7 +33,6 @@ class AuthValidators {
     return null;
   }
 
-  /// Confirm password must match password
   static String? validateConfirmPassword(String? value, String password) {
     if (value == null || value.isEmpty) {
       return 'Kindly confirm your password';

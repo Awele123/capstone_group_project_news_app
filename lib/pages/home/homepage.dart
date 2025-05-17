@@ -3,6 +3,7 @@
 import 'package:capstone_news_app/constants/app_colors.dart';
 import 'package:capstone_news_app/constants/home_images.dart';
 import 'package:capstone_news_app/constants/nav_images.dart';
+import 'package:capstone_news_app/cubits/auth_cubit.dart';
 import 'package:capstone_news_app/global_widgets/app_text.dart';
 import 'package:capstone_news_app/global_widgets/app_textfield.dart';
 import 'package:capstone_news_app/pages/widgets/homewidgets/src/news_details.dart';
@@ -10,6 +11,7 @@ import 'package:capstone_news_app/route/routename.dart';
 //import 'package:capstone_news_app/pages/widgets/homewidgets/src/bottom_nav.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 part '../widgets/homewidgets/src/build_image.dart';
 part '../widgets/homewidgets/src/buildindicator.dart';
@@ -55,6 +57,8 @@ class _HomepageState extends State<Homepage> {
     ];
 
     final size = MediaQuery.sizeOf(context);
+    final watchauth = context.watch<AuthCubit>();
+
     return SafeArea(
       child: PopScope(
         canPop: false,
@@ -88,7 +92,7 @@ class _HomepageState extends State<Homepage> {
                           Column(
                             children: [
                               AppText(
-                                text: 'Hi Chidinma,',
+                                text: 'Hi ${watchauth.user.name},',
                               ),
                               AppText(
                                 text: 'Welcome',
@@ -200,6 +204,9 @@ class _HomepageState extends State<Homepage> {
                         },
                       ),
                     ),
+                    SizedBox(
+                      height: size.width * 0.05,
+                    ),
                     BuildIndicator(
                         activeIndex: activeIndex, count: homeImageList.length),
                   ],
@@ -268,7 +275,6 @@ class _HomepageState extends State<Homepage> {
               ],
             ),
           ),
-          // bottomNavigationBar: BottomNav(),
         ),
       ),
     );

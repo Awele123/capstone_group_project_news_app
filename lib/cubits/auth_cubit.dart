@@ -24,23 +24,12 @@ class AuthCubit extends Cubit<AuthenticationState> {
 
   final namecontroller = TextEditingController();
   UserModel user = UserModel();
-  final emailcontroller = TextEditingController(
-      //text: kDebugMode ? 'nwabuzor.jessica@gtcomnet.com' : '',
-      );
+  final emailcontroller = TextEditingController();
   final mobileController = TextEditingController();
   final newPasswordController = TextEditingController();
-  final passwordcontroller = TextEditingController(
-      // text: kDebugMode ? 'Candlesticks123#' : '',
-      );
+  final passwordcontroller = TextEditingController();
 
   final confirmPasswordController = TextEditingController();
-
-  bool rememberMe = false;
-  changeStaylogIn() {
-    emit(AuthLoadingState());
-    rememberMe = !rememberMe;
-    emit(AuthLoadedState());
-  }
 
   register() async {
     emit(AuthLoadingState());
@@ -78,7 +67,6 @@ class AuthCubit extends Cubit<AuthenticationState> {
           log("Registration successful!");
           user = UserModel.fromJson(body['user']);
 
-          // Proceed with the registration even without a token
           passwordcontroller.clear();
           confirmPasswordController.clear();
           namecontroller.clear();
@@ -88,12 +76,11 @@ class AuthCubit extends Cubit<AuthenticationState> {
           Utils.showTopSnackBar(message: body['message']);
           return;
         } else {
-          // If 'user' is missing or null in the response body
-          log("❌ User data is missing in response body");
+          log("User data is missing in response body");
           emit(AuthErrorState(error: 'User data not found in response'));
         }
       } else {
-        log("❌ Registration failed! Status Code: ${response.statusCode}");
+        log("Registration failed! Status Code: ${response.statusCode}");
         emit(AuthErrorState(error: 'Registration failed'));
         Utils.showTopSnackBar(message: body['message']);
       }
@@ -103,11 +90,11 @@ class AuthCubit extends Cubit<AuthenticationState> {
     }
   }
 
-  welcombackLogin() async {
-    emailcontroller.text = user.email ?? "";
-    await login();
-    passwordcontroller.clear();
-  }
+  // welcombackLogin() async {
+  //   emailcontroller.text = user.email ?? "";
+  //   await login();
+  //   passwordcontroller.clear();
+  // }
 
   login({bool useLocalStorage = false}) async {
     emit(AuthLoadingState());
@@ -159,30 +146,25 @@ class AuthCubit extends Cubit<AuthenticationState> {
           await AuthUtils().storeBearerToken(token);
           bearerToken = token;
         } else {
-          log("❌ No token received in response");
+          log("No token received in response");
         }
 
-        if (rememberMe == true) {
-          await prefs.setStringList('loginInfo', [
-            emailcontroller.text.trim(),
-            passwordcontroller.text.trim(),
-          ]);
-          await AuthUtils()
-              .saveUserInfo(user); // optional: only if `user` is used elsewhere
-        }
-
+        await prefs.setStringList('loginInfo', [
+          emailcontroller.text.trim(),
+          passwordcontroller.text.trim(),
+        ]);
+        await fetchUserprofie();
         emailcontroller.clear();
         passwordcontroller.clear();
-
         Utils.showTopSnackBar(message: message);
         emit(LoginState());
       } else {
-        // emit(AuthErrorState(error: ''));
+        //emit(AuthErrorState(error: ''));
         Utils.showTopSnackBar(
             message: body['message'] ?? 'Something went wrong');
       }
     } catch (e) {
-      log('❌ login error: $e');
+      log('login error: $e');
       emit(AuthErrorState(error: 'An error occurred during login'));
     }
   }
@@ -231,7 +213,7 @@ class AuthCubit extends Cubit<AuthenticationState> {
       final body = jsonDecode(response.body);
       if (response.statusCode == 200) {
         user = UserModel.fromJson(body['data']);
-
+        log('Fetched profile data: ${body['data']}');
         emit(ProfileFetched());
       } else {
         Utils.showTopSnackBar(message: body['message']);

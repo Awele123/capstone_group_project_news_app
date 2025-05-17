@@ -3,9 +3,7 @@ import 'dart:developer';
 import 'package:capstone_news_app/constants/api_constants.dart';
 import 'package:http/http.dart' as http;
 
-// Register a user
 class AuthRepo {
-  // Register a user without Bearer token
   Future<http.Response> register({
     required String email,
     required String name,
@@ -29,7 +27,6 @@ class AuthRepo {
     return response;
   }
 
-  // Login a user
   Future<http.Response> login({
     required String email,
     required String password,
@@ -77,13 +74,12 @@ class AuthRepo {
     final response = await http.put(
       url,
       headers: {'Content-Type': 'application/json'},
-      body: jsonEncode(data), // Ensure the data is properly encoded as JSON
+      body: jsonEncode(data),
     );
 
     return response;
   }
 
-  // Save news
   Future<http.Response> saveNews() async {
     final url = Uri.parse(ApiConstants.getsaveNews('643b8f1c4d2a0e3f5c9b7e6d'));
     final response = await http.post(
