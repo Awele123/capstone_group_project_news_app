@@ -14,6 +14,7 @@ class HomeImages {
   static const rir = 'assets/home/rir.jpeg';
   static const simfub = 'assets/home/simfub.jpg';
   static const barcelona = 'assets/home/barcelona.png';
+  static const background = 'assets/home/background.jpeg';
   
 }
 

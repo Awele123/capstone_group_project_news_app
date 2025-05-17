@@ -1,6 +1,7 @@
 import 'package:capstone_news_app/pages/authentication/sign_in.dart';
 import 'package:capstone_news_app/pages/authentication/sign_up.dart';
 import 'package:capstone_news_app/pages/home/homepage.dart';
+import 'package:capstone_news_app/pages/home/profile/profile.dart';
 import 'package:capstone_news_app/pages/search/search.dart';
 import 'package:capstone_news_app/pages/widgets/homewidgets/src/bottom_nav.dart';
 import 'package:capstone_news_app/pages/widgets/homewidgets/src/news_details.dart';
@@ -22,6 +23,10 @@ class Routes {
         return MaterialPageRoute(builder: (_) => NewsDetails());
       case RouteName.search:
         return MaterialPageRoute(builder: (_) => Search());
+        case RouteName.profile:
+        return MaterialPageRoute(builder: (_) => Profile());
+        
+        
       // Add other routes here as needed
       default:
         return MaterialPageRoute(

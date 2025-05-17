@@ -2,6 +2,7 @@ import 'package:capstone_news_app/constants/app_colors.dart';
 import 'package:capstone_news_app/constants/nav_images.dart';
 import 'package:capstone_news_app/pages/home/homepage.dart';
 import 'package:capstone_news_app/pages/home/live/live.dart';
+import 'package:capstone_news_app/pages/home/profile/profile.dart';
 import 'package:capstone_news_app/pages/home/save/save.dart';
 import 'package:capstone_news_app/pages/search/search.dart';
 import 'package:flutter/material.dart';
@@ -83,7 +84,10 @@ class _BottomNavState extends State<BottomNav> {
       case 3:
         return SavedNewsScreen();
       case 4:
-        return Center(child: Text('Profile'));
+        return Profile();
+        //Center(child: Text('Profile'));
+        // case 5:
+        // return Profile();
       default:
         return Homepage();
     }

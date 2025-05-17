@@ -23,7 +23,7 @@ class SavedNewsScreen extends StatelessWidget {
           'image': HomeImages.footballer,
           'category': 'Sports',
           'title':
-              'Super Osimhen can’t stop scoring as he hits his 28th for the season for table toppers Galatasaray',
+              'Super Osimhen can’t stop scoring as he hits his 28th for the season for table toppers Galatasary',
           'source': 'Complete Sports',
           'timeAgo': '2 days ago',
         },
@@ -33,8 +33,10 @@ class SavedNewsScreen extends StatelessWidget {
       'dateLabel': 'Yesterday',
       'articles': [
         {
+
+           'category': 'Politics',
           'image':HomeImages.patJohn,
-          'category': 'Politics',
+         
           'title':
               'Why Goodluck Jonathan won’t run in 2027 – Patience Jonathan',
           'source': 'Vanguard',
@@ -151,17 +153,7 @@ class SavedNewsScreen extends StatelessWidget {
           );
         },
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        selectedItemColor: Colors.black,
-        unselectedItemColor: Colors.grey,
-        items: [
-          const BottomNavigationBarItem(icon: Icon(Icons.home), label: ''),
-          const BottomNavigationBarItem(icon: Icon(Icons.calendar_today), label: ''),
-          const BottomNavigationBarItem(icon: Icon(Icons.chat), label: ''),
-          const BottomNavigationBarItem(icon: Icon(Icons.bookmark), label: ''),
-          const BottomNavigationBarItem(icon: Icon(Icons.person), label: ''),
-        ],
-      ),
+     
     );
   }
 }
