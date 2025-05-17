@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'UpNext',
-      initialRoute: RouteName.bottomNav,
+      initialRoute: RouteName.signIn,
       navigatorKey: AppRoute.navigatorKey,
       onGenerateRoute: Routes.generateRoute,
       debugShowCheckedModeBanner: false,
