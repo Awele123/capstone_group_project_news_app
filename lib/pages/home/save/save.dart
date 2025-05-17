@@ -1,3 +1,4 @@
+import 'package:capstone_news_app/constants/home_images.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -11,7 +12,7 @@ class SavedNewsScreen extends StatelessWidget {
       'dateLabel': 'Today',
       'articles': [
         {
-          'image': 'https://via.placeholder.com/100',
+          'image':  HomeImages.davido,
           'category': 'Entertainment',
           'title':
               'Nigerian Superstar Davido set to release fifth studio album titled “5IVE” on April 18th, set to set tracklist soon',
@@ -19,7 +20,7 @@ class SavedNewsScreen extends StatelessWidget {
           'timeAgo': '4 days ago',
         },
         {
-          'image': 'https://via.placeholder.com/100',
+          'image': HomeImages.footballer,
           'category': 'Sports',
           'title':
               'Super Osimhen can’t stop scoring as he hits his 28th for the season for table toppers Galatasaray',
@@ -32,7 +33,7 @@ class SavedNewsScreen extends StatelessWidget {
       'dateLabel': 'Yesterday',
       'articles': [
         {
-          'image': 'https://via.placeholder.com/100',
+          'image':HomeImages.patJohn,
           'category': 'Politics',
           'title':
               'Why Goodluck Jonathan won’t run in 2027 – Patience Jonathan',
@@ -45,7 +46,7 @@ class SavedNewsScreen extends StatelessWidget {
       'dateLabel': '03/12/2025',
       'articles': [
         {
-          'image': 'https://via.placeholder.com/100',
+          'image':HomeImages.simfub ,
           'category': 'Politics',
           'title':
               'Rivers crisis: What I told Fubara when he came begging – Wike',
@@ -53,7 +54,7 @@ class SavedNewsScreen extends StatelessWidget {
           'timeAgo': '2 days ago',
         },
         {
-          'image': 'https://via.placeholder.com/100',
+          'image': HomeImages.bolaAhmed,
           'category': 'Politics',
           'title':
               'President Tinubu jets to Paris amid threatening insecurities in Nigeria',
