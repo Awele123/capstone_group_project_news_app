@@ -8,6 +8,12 @@ class HomeImages {
   static const bolaAhmed = 'assets/home/bolaAhmed.png';
   static const tinubu = 'assets/home/tinubu.jpeg';
   static const joe = 'assets/home/joe.jpg';
+  static const liveImage = 'assets/home/Live_Img.jpg';
+  static const patJohn = 'assets/home/patjohn.jpg';
+  static const realMadrid = 'assets/home/real-madrid.png';
+  static const rir = 'assets/home/rir.jpeg';
+  static const simfub = 'assets/home/simfub.jpg';
+  static const barcelona = 'assets/home/barcelona.png';
   
 }
 
