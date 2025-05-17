@@ -65,54 +65,45 @@ class _HomepageState extends State<Homepage> {
         child: Scaffold(
           backgroundColor: Colors.white,
           extendBodyBehindAppBar: true,
+          appBar: AppBar(
+            surfaceTintColor: Colors.transparent,
+            backgroundColor: Colors.white,
+            leading: Padding(
+              padding: EdgeInsets.all(
+                size.width * 0.02,
+              ),
+              child: Container(
+                padding: EdgeInsets.all(size.width * 0.02),
+                decoration: BoxDecoration(
+                  color: AppColors.primaryColor,
+                  borderRadius: BorderRadius.circular(size.width * 0.04),
+                ),
+                child: GestureDetector(
+                    onTap: () {}, child: Image.asset(NavImages.editProfile)),
+              ),
+            ),
+            title: Column(
+              children: [
+                AppText(text: 'Hi ${watchauth.user.name},', textSize: 12),
+                AppText(
+                  text: 'Welcome',
+                  textSize: 12,
+                ),
+              ],
+            ),
+            actions: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Icon(Icons.notifications_outlined),
+                  Icon(Icons.menu)
+                ],
+              )
+            ],
+          ),
           body: SingleChildScrollView(
             child: Column(
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.all(size.width * 0.05),
-                      child: Row(
-                        children: [
-                          Container(
-                            padding: EdgeInsets.all(size.width * 0.02),
-                            decoration: BoxDecoration(
-                              color: AppColors.primaryColor,
-                              borderRadius:
-                                  BorderRadius.circular(size.width * 0.04),
-                            ),
-                            child: GestureDetector(
-                                onTap: () {},
-                                child: Image.asset(NavImages.editProfile)),
-                          ),
-                          SizedBox(
-                            width: size.width * 0.05,
-                          ),
-                          Column(
-                            children: [
-                              AppText(
-                                text: 'Hi ${watchauth.user.name},',
-                              ),
-                              AppText(
-                                text: 'Welcome',
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(right: size.width * 0.05),
-                      child: Row(
-                        children: [
-                          Icon(Icons.notifications_outlined),
-                          Icon(Icons.menu)
-                        ],
-                      ),
-                    )
-                  ],
-                ),
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: size.width * 0.07),
                   child: AppTextField(
@@ -233,9 +224,6 @@ class _HomepageState extends State<Homepage> {
                     ],
                   ),
                 ),
-                // SizedBox(
-                //   height: size.width * 0.03,
-                // ),
                 Padding(
                   padding: EdgeInsets.symmetric(
                       horizontal: size.width * 0.06,
