@@ -65,7 +65,7 @@ class _ProfileState extends State<Profile> {
                     ),
                     SizedBox(height: 10.0,),
                      AppText(
-                    text: 'Female',
+                    text: 'chidimmawele@gmail.com',
                      textSize: 20,
                   fontWeight: FontWeight.bold,
                   ),
