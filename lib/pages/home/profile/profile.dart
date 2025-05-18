@@ -31,7 +31,7 @@ class _ProfileState extends State<Profile> {
               SizedBox(height: 160,),
               CircleAvatar(
                 radius: 50,
-                backgroundImage: AssetImage(HomeImages.bolaAhmed),
+                backgroundImage: AssetImage(HomeImages.avatar),
               ),
               SizedBox(height: 10),
               Container(
