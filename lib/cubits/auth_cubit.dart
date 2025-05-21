@@ -90,12 +90,6 @@ class AuthCubit extends Cubit<AuthenticationState> {
     }
   }
 
-  // welcombackLogin() async {
-  //   emailcontroller.text = user.email ?? "";
-  //   await login();
-  //   passwordcontroller.clear();
-  // }
-
   login({bool useLocalStorage = false}) async {
     emit(AuthLoadingState());
 
@@ -135,6 +129,7 @@ class AuthCubit extends Cubit<AuthenticationState> {
       if (response.statusCode == 401) {
         prefs.remove('loginInfo');
         emit(AuthErrorState(error: 'Login info not found'));
+        Utils.showTopSnackBar(message: body['message']);
         return;
       }
 
@@ -148,12 +143,18 @@ class AuthCubit extends Cubit<AuthenticationState> {
         } else {
           log("No token received in response");
         }
+        if (body.containsKey('data')) {
+          user = UserModel.fromJson(body['data']);
+          log('Assigned user from login data: ${user.name}');
+        }
 
         await prefs.setStringList('loginInfo', [
           emailcontroller.text.trim(),
           passwordcontroller.text.trim(),
         ]);
         await fetchUserprofie();
+        log('Fetched profile data: ${body['data']}');
+
         emailcontroller.clear();
         passwordcontroller.clear();
         Utils.showTopSnackBar(message: message);

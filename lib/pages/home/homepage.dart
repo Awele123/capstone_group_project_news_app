@@ -96,7 +96,9 @@ class _HomepageState extends State<Homepage> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Icon(Icons.notifications_outlined),
-                  Icon(Icons.menu)
+                  SizedBox(width: size.width * 0.02),
+                  Icon(Icons.menu),
+                  SizedBox(width: size.width * 0.02),
                 ],
               )
             ],

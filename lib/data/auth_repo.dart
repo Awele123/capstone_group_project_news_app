@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'package:capstone_news_app/constants/api_constants.dart';
+import 'package:capstone_news_app/utils/auth_utils.dart';
 import 'package:http/http.dart' as http;
 
 class AuthRepo {
@@ -45,11 +46,19 @@ class AuthRepo {
 
   // Fetch user profile
   Future<http.Response> fetchUserProfile() async {
+    final token = await AuthUtils().getBearerToken(); // Get token from storage
     final url = Uri.parse(ApiConstants.fetchUserProfile);
+
+    log("Fetching profile with token: $token");
+
     final response = await http.get(
       url,
-      headers: {'Content-Type': 'application/json'},
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
     );
+
     return response;
   }
 
