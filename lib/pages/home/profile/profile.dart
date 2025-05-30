@@ -1,5 +1,6 @@
 import 'package:capstone_news_app/constants/home_images.dart';
 import 'package:capstone_news_app/global_widgets/app_text.dart';
+import 'package:capstone_news_app/pages/home/save/save.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -85,7 +86,7 @@ class _ProfileState extends State<Profile> {
                 child:
                  Row(mainAxisAlignment: MainAxisAlignment.center,
                    children: [
-                    IconButton(icon:Icon(Icons.favorite), onPressed: () {},),
+                    IconButton(icon:Icon(Icons.favorite), onPressed: () {Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> SavedNewsScreen()));},),
                      AppText(
                       text:'Favourite',
                        textSize: 20,

@@ -116,6 +116,7 @@ class _SignupScreenState extends State<SignupScreen> {
                 ),
               ),
             ),
+            surfaceTintColor: Colors.transparent,
           ),
           body: SingleChildScrollView(
             padding:

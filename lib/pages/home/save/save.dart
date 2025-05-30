@@ -1,4 +1,6 @@
 import 'package:capstone_news_app/constants/home_images.dart';
+import 'package:capstone_news_app/pages/home/homepage.dart';
+import 'package:capstone_news_app/pages/widgets/homewidgets/src/bottom_nav.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -71,6 +73,7 @@ class SavedNewsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(onPressed: () {Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> BottomNav()));}, icon: Icon(Icons.arrow_back)),
         title: const Text('Saved News'),
         actions: [
           const Icon(Icons.search),
