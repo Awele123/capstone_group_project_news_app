@@ -84,6 +84,7 @@ class SavedNewsScreen extends StatelessWidget {
         elevation: 0,
         backgroundColor: Colors.white,
         foregroundColor: Colors.black,
+        surfaceTintColor:Colors.transparent,
       ),
       body: ListView.builder(
         itemCount: groupedNews.length,
