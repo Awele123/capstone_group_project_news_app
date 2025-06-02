@@ -66,23 +66,21 @@ class AuthRepo {
   Future<http.Response> updateUserProfile({
     required String name,
     required String email,
-    required String mobile,
-    required String currentPassword,
-    required String password,
+    required String newPassword,
   }) async {
+    final token = await AuthUtils().getBearerToken(); 
     final url = Uri.parse(ApiConstants.updateUserProfile);
 
     final Map<String, String> data = {
       'name': name,
       'email': email,
-      'mobile': mobile,
-      'currentPassword': currentPassword,
-      'password': password,
+      'password': newPassword,
     };
 
     final response = await http.put(
       url,
-      headers: {'Content-Type': 'application/json'},
+      headers: {'Content-Type': 'application/json' ,'Authorization': 'Bearer $token',},
+      
       body: jsonEncode(data),
     );
 

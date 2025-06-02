@@ -1,5 +1,6 @@
 import 'package:capstone_news_app/constants/home_images.dart';
 import 'package:capstone_news_app/pages/home/homepage.dart';
+import 'package:capstone_news_app/pages/home/profile/profile.dart';
 import 'package:capstone_news_app/pages/widgets/homewidgets/src/bottom_nav.dart';
 import 'package:flutter/material.dart';
 

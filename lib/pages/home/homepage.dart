@@ -58,7 +58,8 @@ class _HomepageState extends State<Homepage> {
 
     final size = MediaQuery.sizeOf(context);
     final watchauth = context.watch<AuthCubit>();
-
+String fullName = watchauth.user.name ?? '';
+String firstName = fullName.split(' ').first;
     return SafeArea(
       child: PopScope(
         canPop: false,
@@ -84,7 +85,7 @@ class _HomepageState extends State<Homepage> {
             ),
             title: Column(
               children: [
-                AppText(text: 'Hi ${watchauth.user.name},', textSize: 12),
+                AppText(text: 'Hi $firstName,', textSize: 12),
                 AppText(
                   text: 'Welcome',
                   textSize: 12,

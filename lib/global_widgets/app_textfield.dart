@@ -14,13 +14,19 @@ class AppTextField extends StatefulWidget {
     this.radius,
     this.errorText,
     this.focusNode,
+    this.fillColor,
+    this.initValue,
+    this.initStyle,
+    this.verticalWidth,
   });
 
-  final String? text, errorText;
-  final double? radius;
+  final String? text, errorText, initValue;
+  final double? radius, verticalWidth;
+  final Color? fillColor;
   final bool obscureText;
   final Function? onChanged;
   final TextEditingController? controller;
+  final TextStyle? initStyle;
   final Widget? suffixIcon, prefixIcon;
   final FocusNode? focusNode;
 
@@ -30,14 +36,25 @@ class AppTextField extends StatefulWidget {
 
 class _AppTextFieldState extends State<AppTextField> {
   late FocusNode _internalFocusNode;
-  bool _isFocused = false;
+  late bool _isFocused;
+  TextEditingController? _internalController;
 
   FocusNode get _effectiveFocusNode => widget.focusNode ?? _internalFocusNode;
+  TextEditingController get _effectiveController =>
+      widget.controller ?? _internalController!;
 
   @override
   void initState() {
     super.initState();
     _internalFocusNode = FocusNode();
+    _isFocused = false;
+
+    if (widget.controller == null) {
+      _internalController = TextEditingController(text: widget.initValue ?? '');
+    } else if (widget.initValue != null) {
+      widget.controller!.text = widget.initValue!;
+    }
+
     _effectiveFocusNode.addListener(() {
       setState(() {
         _isFocused = _effectiveFocusNode.hasFocus;
@@ -47,9 +64,8 @@ class _AppTextFieldState extends State<AppTextField> {
 
   @override
   void dispose() {
-    if (widget.focusNode == null) {
-      _internalFocusNode.dispose(); // only dispose if we created it
-    }
+    if (widget.focusNode == null) _internalFocusNode.dispose();
+    if (widget.controller == null) _internalController?.dispose();
     super.dispose();
   }
 
@@ -57,9 +73,10 @@ class _AppTextFieldState extends State<AppTextField> {
   Widget build(BuildContext context) {
     final size = MediaQuery.sizeOf(context);
 
-    return TextField(
+    return TextFormField(
+      style: widget.initStyle,
+      controller: _effectiveController,
       focusNode: _effectiveFocusNode,
-      controller: widget.controller,
       obscureText: widget.obscureText,
       onTapOutside: (_) => dismissKeyboard(context),
       onChanged: (value) => widget.onChanged?.call(value),
@@ -84,8 +101,8 @@ class _AppTextFieldState extends State<AppTextField> {
               : null,
         ),
         filled: true,
-        fillColor: const Color(0xffeefaff),
-        hintText: widget.text ?? 'Email',
+        fillColor: widget.fillColor ?? const Color(0xffeefaff),
+        hintText: widget.text ?? 'Enter value',
         hintStyle: GoogleFonts.poppins(
           color: const Color(0xff948b8b),
           fontSize: 15,
@@ -93,14 +110,15 @@ class _AppTextFieldState extends State<AppTextField> {
         ),
         contentPadding: EdgeInsets.symmetric(
           horizontal: size.width * 0.06,
+          vertical: widget.verticalWidth ?? size.width * 0.03,
         ),
         focusedBorder: OutlineInputBorder(
           borderSide: const BorderSide(color: Color(0xff62b7d5)),
-          borderRadius: BorderRadius.circular(widget.radius ?? size.width * 0),
+          borderRadius: BorderRadius.circular(widget.radius ?? size.width * 0.02),
         ),
         enabledBorder: OutlineInputBorder(
           borderSide: BorderSide.none,
-          borderRadius: BorderRadius.circular(widget.radius ?? size.width * 0),
+          borderRadius: BorderRadius.circular(widget.radius ?? size.width * 0.02),
         ),
       ),
     );

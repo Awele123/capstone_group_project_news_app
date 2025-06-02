@@ -3,7 +3,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:capstone_news_app/models/user.model.dart';
 
 class AuthUtils {
-  static const String _userKey = 'user_data';
+  static const String _userKey = 'data';
   static const _bearerTokenKey = 'bearer_token';
 
   Future<void> storeBearerToken(String token) async {

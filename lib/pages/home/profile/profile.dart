@@ -1,8 +1,13 @@
+import 'package:capstone_news_app/constants/app_colors.dart';
 import 'package:capstone_news_app/constants/home_images.dart';
+import 'package:capstone_news_app/cubits/auth_cubit.dart';
+import 'package:capstone_news_app/global_widgets/app_button.dart';
 import 'package:capstone_news_app/global_widgets/app_text.dart';
+import 'package:capstone_news_app/global_widgets/app_textfield.dart';
 import 'package:capstone_news_app/pages/home/save/save.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class Profile extends StatefulWidget {
   const Profile({super.key});
@@ -12,138 +17,166 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
+  late TextEditingController nameController;
+
+  @override
+  void initState() {
+    super.initState();
+    final userName = context.read<AuthCubit>().user.name;
+    nameController = TextEditingController(text: userName);
+  }
+
+  @override
+  void dispose() {
+    nameController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return  Scaffold(
-      body: Stack(
+    final watchauth = context.watch<AuthCubit>();
+    final size = MediaQuery.sizeOf(context);
+
+    return Scaffold(
+      backgroundColor: const Color.fromARGB(255, 230, 224, 224),
+      body: Column(
         children: [
-          Container(
-            height: 250,
-           decoration: 
-            BoxDecoration(
-              image:
-               DecorationImage(image: AssetImage(HomeImages.background),
-              fit:BoxFit.cover,
-               )
-            ),
-          ),
-          Column(
+          Stack(
+            alignment: Alignment.center,
             children: [
-              SizedBox(height: 160,),
-              CircleAvatar(
-                radius: 50,
-                backgroundImage: AssetImage(HomeImages.avatar),
-              ),
-              SizedBox(height: 10),
               Container(
+                height: 250,
                 decoration: BoxDecoration(
-                  border: Border.all(color: const Color.fromARGB(255, 225, 233, 235),
+                  image: DecorationImage(
+                    image: AssetImage(HomeImages.background),
+                    fit: BoxFit.cover,
+                  ),
                 ),
-                borderRadius: BorderRadius.circular(12),
-                color: Colors.white
+              ),
+              Positioned(
+                bottom: 0,
+                child: CircleAvatar(
+                  radius: 50,
+                  backgroundImage: AssetImage(HomeImages.avatar),
                 ),
+              ),
+            ],
+          ),
+          Expanded(
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.only(top: 20),
                 child: Column(
                   children: [
-                    Row(mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        AppText(
-                          text: 'Chidimma Awele',
-                          textSize: 22,
+                    Padding(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: size.width * 0.05),
+                      child: AppTextField(
+                        controller: nameController,
+                        verticalWidth: 25,
+                        fillColor: Colors.white,
+                        suffixIcon:
+                            Icon(Icons.edit, color: AppColors.bookMarkColor),
+                        radius: 12,
+                        initStyle: GoogleFonts.poppins(
+                          fontSize: 22,
                           fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 20),
+                    _buildInfoCard(
+                      size,
+                      Row(
+                        children: [
+                          Icon(Icons.email, color: AppColors.bookMarkColor),
+                          SizedBox(width: size.width * 0.03),
+                          AppText(
+                            text: '${watchauth.user.email}',
+                            textSize: 22,
+                            color: AppColors.lightGreyColor,
+                            fontWeight: FontWeight.bold,
                           ),
-                         
-                          SizedBox(width: 30,),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Text('Edit', style: TextStyle(color: Colors.blue),),
-                               IconButton(icon:Icon(Icons.edit, color: Colors.blue,), onPressed: () {},)
-                            ],
-                          
+                        ],
+                      ),
+                    ),
+                    SizedBox(height: 20),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(builder: (_) => SavedNewsScreen()),
+                        );
+                      },
+                      child: _buildInfoCard(
+                        size,
+                        Row(
+                          children: [
+                            Icon(Icons.favorite,
+                                color: AppColors.bookMarkColor),
+                            SizedBox(width: size.width * 0.03),
+                            AppText(
+                              text: 'Favourite',
+                              textSize: 22,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 20),
+                    _buildInfoCard(
+                      size,
+                      Row(
+                        children: [
+                          Icon(Icons.logout, color: AppColors.bookMarkColor),
+                          SizedBox(width: size.width * 0.03),
+                          AppText(
+                            text: 'Log Out',
+                            textSize: 22,
+                            fontWeight: FontWeight.bold,
                           ),
-                         
-                      ],
+                        ],
+                      ),
                     ),
-                    SizedBox(height: 10.0,),
-                     AppText(
-                    text: 'chidimmawele@gmail.com',
-                     textSize: 20,
-                  fontWeight: FontWeight.bold,
-                  ),
+                    SizedBox(height: 40),
+                    AppButton(
+                      width: 70.0,
+                      text: 'Save',
+                      buttonColor: AppColors.bookMarkColor,
+                      onTap: () {
+                        // final cubit = context.read<AuthCubit>();
+                        context.read<AuthCubit>().namecontroller.text = nameController.text.trim();
+                        context.read<AuthCubit>().updateUserProfile();
+                      },
+                    ),
+                    SizedBox(height: 20),
                   ],
                 ),
               ),
-               
-              SizedBox(height: 20,),
-              Container(
-                
-                decoration: BoxDecoration(
-                  border: Border.all(color: const Color.fromARGB(255, 225, 233, 235),
-                ),
-                borderRadius: BorderRadius.circular(12),
-                color: Colors.white
-                ),
-                child:
-                 Row(mainAxisAlignment: MainAxisAlignment.center,
-                   children: [
-                    IconButton(icon:Icon(Icons.favorite), onPressed: () {Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> SavedNewsScreen()));},),
-                     AppText(
-                      text:'Favourite',
-                       textSize: 20,
-                      fontWeight: FontWeight.bold,
-                                     ),
-                                     //GestureDetector()
-                   ],
-                   
-                 ),
-              ),
-              SizedBox(height: 20),
-              Container(
-                decoration: BoxDecoration(
-                  border: Border.all(color: const Color.fromARGB(255, 225, 233, 235),
-                ),
-                borderRadius: BorderRadius.circular(12),
-                color: Colors.white
-                ),
-                child: Row(mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    IconButton(icon: Icon(Icons.lock), onPressed: () {},),
-                    AppText(
-                      text:'Change Password',
-                       textSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(height: 20),
-              Container(
-                decoration:BoxDecoration(
-                  border: Border.all(color: const Color.fromARGB(255, 225, 233, 235),
-                ),
-                borderRadius: BorderRadius.circular(12),
-                color: Colors.white
-                ),
-                 child: Row(mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    IconButton(icon: Icon(Icons.logout_outlined), onPressed: () {},),
-                    AppText(
-                      text:'Log Out',
-                   textSize: 20,
-                  fontWeight: FontWeight.bold,
-                    ),
-                  ],
-                ),
-              )
-            ],
-          )
+            ),
+          ),
         ],
       ),
-      //profile information
-      //favorite 
-      //log out 
-      //change password
+    );
+  }
 
+  Widget _buildInfoCard(Size size, Widget child) {
+    return Container(
+      margin: EdgeInsets.symmetric(horizontal: size.width * 0.05),
+      decoration: BoxDecoration(
+        border: Border.all(color: const Color.fromARGB(255, 225, 233, 235)),
+        borderRadius: BorderRadius.circular(12),
+        color: Colors.white,
+      ),
+      child: Padding(
+        padding: EdgeInsets.symmetric(
+          horizontal: size.width * 0.05,
+          vertical: size.width * 0.04,
+        ),
+        child: child,
+      ),
     );
   }
 }

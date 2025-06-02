@@ -5,8 +5,8 @@ class ApiConstants {
 
   static String get login => '$baseUrl/api/users/login';
   static String get register => '$baseUrl/api/users/register';
-  static String get fetchUserProfile => '$baseUrl/users/profile';
-  static String get updateUserProfile => '$baseUrl/users/profile';
+  static String get fetchUserProfile => '$baseUrl/api/users/profile';
+  static String get updateUserProfile => '$baseUrl/api/users/profile';
   static String getsaveNews(String postId) =>
       '$baseUrl/users/save-post/$postId';
 }

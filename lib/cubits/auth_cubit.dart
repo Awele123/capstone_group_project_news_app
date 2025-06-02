@@ -143,17 +143,18 @@ class AuthCubit extends Cubit<AuthenticationState> {
         } else {
           log("No token received in response");
         }
-        if (body.containsKey('data')) {
-          user = UserModel.fromJson(body['data']);
-          log('Assigned user from login data: ${user.name}');
-        }
+
+        // if (body.containsKey('user')) {
+        //   user = UserModel.fromJson(body['user']);
+        //   log('Assigned user from login data: ${user.name}');
+        // }
 
         await prefs.setStringList('loginInfo', [
           emailcontroller.text.trim(),
           passwordcontroller.text.trim(),
         ]);
-        await fetchUserprofie();
-        log('Fetched profile data: ${body['data']}');
+         await fetchUserprofie();
+        log('Fetched profile data: $body');
 
         emailcontroller.clear();
         passwordcontroller.clear();
@@ -182,9 +183,7 @@ class AuthCubit extends Cubit<AuthenticationState> {
       final response = await authRepo.updateUserProfile(
         name: fullName,
         email: emailcontroller.text,
-        mobile: mobileController.text,
-        currentPassword: passwordcontroller.text,
-        password: newPasswordController.text,
+        newPassword: newPasswordController.text,
       );
       log(response.body.toString());
       final body = jsonDecode(response.body);
@@ -193,9 +192,9 @@ class AuthCubit extends Cubit<AuthenticationState> {
       if (response.statusCode == 200) {
         newPasswordController.clear();
         Utils.showTopSnackBar(message: body['message']);
-        user = UserModel.fromJson(body['data']);
+        user = UserModel.fromJson(body['user']);
         emit(ProfileUpdated());
-        email = null; // Or handle this if email is required elsewhere
+        email = null; 
       } else {
         Utils.showTopSnackBar(message: body['message']);
         emit(const ErrorState(error: 'Error updating profile'));
@@ -213,8 +212,8 @@ class AuthCubit extends Cubit<AuthenticationState> {
       log(response.body.toString());
       final body = jsonDecode(response.body);
       if (response.statusCode == 200) {
-        user = UserModel.fromJson(body['data']);
-        log('Fetched profile data: ${body['data']}');
+        user = UserModel.fromJson(body);
+        log('Fetched profile data: $body');
         emit(ProfileFetched());
       } else {
         Utils.showTopSnackBar(message: body['message']);
