@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 class AppTextField extends StatefulWidget {
   const AppTextField({
+    this.readOnly = false,
     super.key,
     this.text,
     this.controller,
@@ -20,6 +21,7 @@ class AppTextField extends StatefulWidget {
     this.verticalWidth,
   });
 
+  final bool readOnly;
   final String? text, errorText, initValue;
   final double? radius, verticalWidth;
   final Color? fillColor;
@@ -74,6 +76,7 @@ class _AppTextFieldState extends State<AppTextField> {
     final size = MediaQuery.sizeOf(context);
 
     return TextFormField(
+      readOnly: widget.readOnly,
       style: widget.initStyle,
       controller: _effectiveController,
       focusNode: _effectiveFocusNode,

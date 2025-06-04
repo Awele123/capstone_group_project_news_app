@@ -18,6 +18,8 @@ class Profile extends StatefulWidget {
 
 class _ProfileState extends State<Profile> {
   late TextEditingController nameController;
+  bool isEditing = false;
+  
 
   @override
   void initState() {
@@ -75,14 +77,24 @@ class _ProfileState extends State<Profile> {
                         controller: nameController,
                         verticalWidth: 25,
                         fillColor: Colors.white,
-                        suffixIcon:
-                            Icon(Icons.edit, color: AppColors.bookMarkColor),
-                        radius: 12,
-                        initStyle: GoogleFonts.poppins(
+                        readOnly: !isEditing,
+                        suffixIcon: isEditing
+                        ? null
+                        : GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              isEditing = true;
+                            });
+                          },
+                          child: Icon(Icons.edit, color: AppColors.bookMarkColor),
+                           ),
+                              radius: 12,
+                              initStyle: GoogleFonts.poppins(
                           fontSize: 22,
                           fontWeight: FontWeight.bold,
                           color: Colors.black,
                         ),
+                   
                       ),
                     ),
                     SizedBox(height: 20),
