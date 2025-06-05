@@ -41,8 +41,8 @@ class Search extends StatelessWidget {
         centerTitle: true,
         backgroundColor: Color(0xFFFFFFFF),
         elevation: 0,
-        leading: Icon(Icons.arrow_back, color: Color(0xFF000000)),
-        actions: [Icon(Icons.notifications_none, color: Color(0xFF000000))],
+        // leading: Icon(Icons.arrow_back, color: Color(0xFF000000)),
+        // actions: [Icon(Icons.notifications_none, color: Color(0xFF000000))],
       ),
       backgroundColor: Color(0xFFFFFFFF),
       body: SingleChildScrollView(

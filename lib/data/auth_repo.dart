@@ -44,6 +44,22 @@ class AuthRepo {
     return response;
   }
 
+  Future<http.Response> admin({
+    required String email,
+    required String password,
+  }) async {
+    final url = Uri.parse(ApiConstants.adminLogin);
+    final response = await http.post(
+      url,
+      body: json.encode({
+        'email': email,
+        'password': password,
+      }),
+      headers: {'Content-Type': 'application/json'},
+    );
+    return response;
+  }
+
   // Fetch user profile
   Future<http.Response> fetchUserProfile() async {
     final token = await AuthUtils().getBearerToken(); // Get token from storage

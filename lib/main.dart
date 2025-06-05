@@ -1,5 +1,7 @@
 import 'package:capstone_news_app/cubits/auth_cubit.dart';
+import 'package:capstone_news_app/cubits/news_cubit.dart';
 import 'package:capstone_news_app/data/auth_repo.dart';
+import 'package:capstone_news_app/data/news_repo.dart';
 import 'package:capstone_news_app/pages/authentication/sign_in.dart';
 import 'package:capstone_news_app/pages/home/homepage.dart';
 import 'package:capstone_news_app/pages/widgets/homewidgets/src/bottom_nav.dart';
@@ -10,9 +12,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 void main() {
-  runApp(BlocProvider(
-      create: (context) => AuthCubit(AuthRepo()), child: const MyApp()));
-  const MyApp();
+  runApp(MultiBlocProvider(
+      providers:[
+      BlocProvider(create: (_) => AuthCubit(AuthRepo())),
+      BlocProvider(create: (_) => NewsCubit(NewsRepo()))],
+      child: const MyApp()));
+
 }
 
 class MyApp extends StatelessWidget {

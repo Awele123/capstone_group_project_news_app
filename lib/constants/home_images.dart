@@ -16,7 +16,9 @@ class HomeImages {
   static const barcelona = 'assets/home/barcelona.png';
   static const background = 'assets/home/background.jpeg';
   static const avatar = 'assets/home/avatar.jpg';
+  static const google = 'assets/home/goggle.jpg';
 }
+
 
 int activeIndex = 0;
 final List<String> homeImageList = [

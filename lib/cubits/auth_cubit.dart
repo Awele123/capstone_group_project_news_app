@@ -170,6 +170,86 @@ class AuthCubit extends Cubit<AuthenticationState> {
       emit(AuthErrorState(error: 'An error occurred during login'));
     }
   }
+  admin({bool useLocalStorage = false}) async {
+    emit(AuthLoadingState());
+
+    try {
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+
+      if (useLocalStorage) {
+        List<String> loginInfo = prefs.getStringList('loginInfo') ?? [];
+        if (loginInfo.isNotEmpty) {
+          emailcontroller.text = loginInfo.first;
+          passwordcontroller.text = loginInfo.last;
+        }
+      }
+
+      log("Email: ${emailcontroller.text}, Password: ${passwordcontroller.text}");
+
+      final response = await authRepo.admin(
+        email: emailcontroller.text.trim(),
+        password: passwordcontroller.text.trim(),
+      );
+
+      log("STATUS: ${response.statusCode}");
+      log("BODY: ${response.body}");
+
+      final body = jsonDecode(response.body);
+
+      if (response.statusCode == 400) {
+        prefs.remove('loginInfo');
+        if (body['type'] == Error403.no_password.name) {
+          emit(NoPasswordState());
+          return;
+        }
+        emit(AuthLoadedState());
+        return;
+      }
+
+      if (response.statusCode == 401) {
+        prefs.remove('loginInfo');
+        emit(AuthErrorState(error: 'Login info not found'));
+        Utils.showTopSnackBar(message: body['message']);
+        return;
+      }
+
+      if (response.statusCode == 200) {
+        String token = body['token'] ?? '';
+        String message = body['message'] ?? 'Login successful';
+
+        if (token.isNotEmpty) {
+          await AuthUtils().storeBearerToken(token);
+          bearerToken = token;
+        } else {
+          log("No token received in response");
+        }
+
+        // if (body.containsKey('user')) {
+        //   user = UserModel.fromJson(body['user']);
+        //   log('Assigned user from login data: ${user.name}');
+        // }
+
+        await prefs.setStringList('loginInfo', [
+          emailcontroller.text.trim(),
+          passwordcontroller.text.trim(),
+        ]);
+         await fetchUserprofie();
+        log('Fetched profile data: $body');
+
+        emailcontroller.clear();
+        passwordcontroller.clear();
+        Utils.showTopSnackBar(message: message);
+        emit(LoginState());
+      } else {
+        //emit(AuthErrorState(error: ''));
+        Utils.showTopSnackBar(
+            message: body['message'] ?? 'Something went wrong');
+      }
+    } catch (e) {
+      log('login error: $e');
+      emit(AuthErrorState(error: 'An error occurred during login'));
+    }
+  }
 
   String? email;
 
@@ -225,13 +305,13 @@ class AuthCubit extends Cubit<AuthenticationState> {
     }
   }
 
-  gotoProfileEdit() {
-    emit(AuthLoadingState());
-    namecontroller.text = user.name.toString();
-    emailcontroller.text = user.email!;
+  // gotoProfileEdit() {
+  //   emit(AuthLoadingState());
+  //   namecontroller.text = user.name.toString();
+  //   emailcontroller.text = user.email!;
 
-    emit(AuthLoadedState());
-  }
+  //   emit(AuthLoadedState());
+  // }
 
   clearTextForms() {
     Future.delayed(Duration.zero, () {
