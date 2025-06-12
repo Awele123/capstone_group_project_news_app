@@ -1,7 +1,7 @@
 import 'package:capstone_news_app/cubits/auth_cubit.dart';
 import 'package:capstone_news_app/cubits/news_cubit.dart';
-import 'package:capstone_news_app/data/auth_repo.dart';
-import 'package:capstone_news_app/data/news_repo.dart';
+import 'package:capstone_news_app/repos/auth_repo.dart';
+import 'package:capstone_news_app/repos/news_repo.dart';
 import 'package:capstone_news_app/pages/authentication/sign_in.dart';
 import 'package:capstone_news_app/pages/home/homepage.dart';
 import 'package:capstone_news_app/pages/widgets/homewidgets/src/bottom_nav.dart';
@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'UpNext',
-      initialRoute: RouteName.signIn,
+      initialRoute: RouteName.bottomNav,
       navigatorKey: AppRoute.navigatorKey,
       onGenerateRoute: Routes.generateRoute,
       debugShowCheckedModeBanner: false,

@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 import 'package:capstone_news_app/constants/api_constants.dart';
-import 'package:capstone_news_app/data/auth_repo.dart';
+import 'package:capstone_news_app/repos/auth_repo.dart';
 import 'package:capstone_news_app/models/user.model.dart';
 import 'package:capstone_news_app/utils/auth_utils.dart';
 import 'package:capstone_news_app/utils/utils.dart';
@@ -170,6 +170,7 @@ class AuthCubit extends Cubit<AuthenticationState> {
       emit(AuthErrorState(error: 'An error occurred during login'));
     }
   }
+  
   admin({bool useLocalStorage = false}) async {
     emit(AuthLoadingState());
 

@@ -31,7 +31,7 @@ class _BuildImageState extends State<BuildImage> {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(size.width * 0.08),
             image: DecorationImage(
-              image: AssetImage(widget.image),
+              image: NetworkImage(widget.image),
               fit: BoxFit.fill,
             ),
           ),

@@ -104,7 +104,7 @@ class AuthRepo {
   }
 
   Future<http.Response> saveNews() async {
-    final url = Uri.parse(ApiConstants.getsaveNews('643b8f1c4d2a0e3f5c9b7e6d'));
+    final url = Uri.parse(ApiConstants.saveNews('643b8f1c4d2a0e3f5c9b7e6d'));
     final response = await http.post(
       url,
       headers: {'Content-Type': 'application/json'},

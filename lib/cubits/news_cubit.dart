@@ -1,7 +1,8 @@
 import 'dart:convert';
 import 'dart:developer';
 
-import 'package:capstone_news_app/data/news_repo.dart';
+import 'package:capstone_news_app/repos/auth_repo.dart';
+import 'package:capstone_news_app/repos/news_repo.dart';
 import 'package:capstone_news_app/models/news.models.dart';
 import 'package:capstone_news_app/models/user.model.dart';
 import 'package:capstone_news_app/utils/utils.dart';
@@ -20,11 +21,10 @@ class NewsCubit extends Cubit<NewsState>{
       log(response.body.toString());
       final body = jsonDecode(response.body);
       if (response.statusCode == 200) {
-        
-          final newsJson = body['news'];
-
-      final news = News.fromJson(newsJson);
-        log('Fetched news: $body');
+      final List<NewsModel> news = (body as List)
+          .map((json) => NewsModel.fromJson(json))
+          .toList();
+        log('Fetched news: $news');
         emit(NewsFetchedState(news: news));
       } else {
         Utils.showTopSnackBar(message: body['message']);
@@ -32,6 +32,23 @@ class NewsCubit extends Cubit<NewsState>{
       }
     } catch (e) {
       emit(const NewsErrorState(message: 'error'));
+      log('notupdate$e');
+    }
+  }
+
+  Future<void> saveNews(String postId) async{
+    emit(NewsSavingState());
+    try {
+      final response = await newsRepo.savePost(postId: postId);
+      final body = jsonDecode(response.body);
+      if (response.statusCode == 200){
+        emit(NewsSavedState());
+      }else {
+        Utils.showTopSnackBar(message: body['message']);
+        emit(FailedToSaveState());
+      }
+    } catch (e) {
+        emit(const NewsErrorState(message: 'error'));
       log('notupdate$e');
     }
   }

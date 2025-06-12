@@ -9,7 +9,7 @@ class ApiConstants {
   static String get updateUserProfile => '$baseUrl/api/users/profile';
   static String get fetchNews => '$baseUrl/api/news';
   static String get adminLogin => '$baseUrl/api/admin/login';
-  static String getsaveNews(String postId) =>
+  static String saveNews(String postId) =>
       '$baseUrl/users/save-post/$postId';
 }
 

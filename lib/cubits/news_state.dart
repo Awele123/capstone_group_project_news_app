@@ -16,23 +16,22 @@ final class NewsErrorState extends NewsState {
 
   @override
   List<Object> get props => [message];
- 
-  
-
 }
 
 final class NewsFetchedState extends NewsState {
-  final News news;
+  final List<NewsModel> news;
   const NewsFetchedState({required this.news});
   @override
   List<Object> get props => [news];
 }
 
 final class NewsInitialState extends NewsState {}
+final class NewsSavingState extends NewsState {
+  
+}
+final class NewsSavedState extends NewsState {}
 
-final class ErrorState extends NewsState {
-  final String error;
-  const ErrorState({required this.error});
-  @override
-  List<Object> get props => [error];
+final class NewsRefreshingState extends NewsState {}
+final class FailedToSaveState extends NewsState {
+ 
 }

@@ -16,7 +16,7 @@ class HomeImages {
   static const barcelona = 'assets/home/barcelona.png';
   static const background = 'assets/home/background.jpeg';
   static const avatar = 'assets/home/avatar.jpg';
-  static const google = 'assets/home/goggle.jpg';
+  //static const google = 'assets/home/goggle.jpg';
 }
 
 
