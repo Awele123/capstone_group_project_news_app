@@ -1,3 +1,4 @@
+import 'package:capstone_news_app/models/news.model.dart';
 import 'package:capstone_news_app/pages/authentication/sign_in.dart';
 import 'package:capstone_news_app/pages/authentication/sign_up.dart';
 import 'package:capstone_news_app/pages/home/homepage.dart';
@@ -19,14 +20,16 @@ class Routes {
         return MaterialPageRoute(builder: (_) => const SignIn());
       case RouteName.bottomNav:
         return MaterialPageRoute(builder: (_) => BottomNav());
-      case RouteName.politics:
-        return MaterialPageRoute(builder: (_) => NewsDetails());
+      case RouteName.newsDetails:
+        final news = settings.arguments as NewsModel;
+        return MaterialPageRoute(
+          builder: (_) => NewsDetails(news: news),
+        );
       case RouteName.search:
         return MaterialPageRoute(builder: (_) => Search());
-        case RouteName.profile:
+      case RouteName.profile:
         return MaterialPageRoute(builder: (_) => Profile());
-        
-        
+
       // Add other routes here as needed
       default:
         return MaterialPageRoute(

@@ -1,164 +1,54 @@
-import 'package:capstone_news_app/constants/home_images.dart';
-import 'package:capstone_news_app/pages/home/homepage.dart';
-import 'package:capstone_news_app/pages/home/profile/profile.dart';
-import 'package:capstone_news_app/pages/widgets/homewidgets/src/bottom_nav.dart';
 import 'package:flutter/material.dart';
-
-void main() {
- 
-}
-
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:capstone_news_app/models/news.model.dart';
+import 'package:capstone_news_app/cubits/news_cubit.dart';
+import 'package:capstone_news_app/global_widgets/app_text.dart';
+import 'package:capstone_news_app/route/routename.dart';
 
 class SavedNewsScreen extends StatelessWidget {
-  final List<Map<String, dynamic>> groupedNews = [
-    {
-      'dateLabel': 'Today',
-      'articles': [
-        {
-          'image':  HomeImages.davido,
-          'category': 'Entertainment',
-          'title':
-              'Nigerian Superstar Davido set to release fifth studio album titled “5IVE” on April 18th, set to set tracklist soon',
-          'source': 'Rolling Stone',
-          'timeAgo': '4 days ago',
-        },
-        {
-          'image': HomeImages.footballer,
-          'category': 'Sports',
-          'title':
-              'Super Osimhen can’t stop scoring as he hits his 28th for the season for table toppers Galatasary',
-          'source': 'Complete Sports',
-          'timeAgo': '2 days ago',
-        },
-      ],
-    },
-    {
-      'dateLabel': 'Yesterday',
-      'articles': [
-        {
-
-           'category': 'Politics',
-          'image':HomeImages.patJohn,
-         
-          'title':
-              'Why Goodluck Jonathan won’t run in 2027 – Patience Jonathan',
-          'source': 'Vanguard',
-          'timeAgo': '2 days ago',
-        },
-      ],
-    },
-    {
-      'dateLabel': '03/12/2025',
-      'articles': [
-        {
-          'image':HomeImages.simfub ,
-          'category': 'Politics',
-          'title':
-              'Rivers crisis: What I told Fubara when he came begging – Wike',
-          'source': 'Daily Post',
-          'timeAgo': '2 days ago',
-        },
-        {
-          'image': HomeImages.bolaAhmed,
-          'category': 'Politics',
-          'title':
-              'President Tinubu jets to Paris amid threatening insecurities in Nigeria',
-          'source': 'The Vanguard',
-          'timeAgo': '24hrs ago',
-        },
-      ],
-    },
-  ];
+  const SavedNewsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final bookmarkedNews = context.watch<NewsCubit>().bookmarkedNews;
+    final size = MediaQuery.sizeOf(context);
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(onPressed: () {Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> BottomNav()));}, icon: Icon(Icons.arrow_back)),
-        title: const Text('Saved News'),
-        actions: [
-          const Icon(Icons.search),
-          const SizedBox(width: 16),
-          const Icon(Icons.notifications_none),
-          const SizedBox(width: 16),
-        ],
-        elevation: 0,
-        backgroundColor: Colors.white,
-        foregroundColor: Colors.black,
-        surfaceTintColor:Colors.transparent,
+        automaticallyImplyLeading: false,
+        title: Row(
+          children: [
+            GestureDetector(
+                onTap: () {
+                  Navigator.pushNamed(context, RouteName.bottomNav);
+                },
+                child: Icon(Icons.arrow_back)),
+            const Text('Saved Items'),
+          ],
+        ),
       ),
-      body: ListView.builder(
-        itemCount: groupedNews.length,
-        itemBuilder: (context, index) {
-          final group = groupedNews[index];
-          return Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  group['dateLabel'],
-                  style: const TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                ...group['articles'].map<Widget>((article) {
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 10.0),
-                    child: Row(
-                      children: [
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(8),
-                          child: Image.network(
-                            article['image'],
-                            width: 80,
-                            height: 80,
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                        const SizedBox(width: 10),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                article['category'],
-                                style: TextStyle(
-                                  fontSize: 12,
-                                  color: Colors.grey[600],
-                                ),
-                              ),
-                              const SizedBox(height: 4),
-                              Text(
-                                article['title'],
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 14,
-                                ),
-                              ),
-                              const SizedBox(height: 4),
-                              Text(
-                                '${article['source']} • ${article['timeAgo']}',
-                                style: const TextStyle(
-                                  fontSize: 12,
-                                  color: Colors.grey,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  );
-                }).toList(),
-                const SizedBox(height: 10),
-              ],
+      body: bookmarkedNews.isEmpty
+          ? const Center(child: Text("No bookmarks yet."))
+          : ListView.builder(
+              itemCount: bookmarkedNews.length,
+              itemBuilder: (context, index) {
+                final news = bookmarkedNews[index];
+                return ListTile(
+                  leading: ClipRRect(
+                      borderRadius: BorderRadius.circular(10),
+                      child: Image.network(news.image,
+                          width: 80, height: 80, fit: BoxFit.cover)),
+                  title: Text(news.title),
+                  subtitle: Text(news.category),
+                  onTap: () {
+                    Navigator.pushNamed(
+                      context,
+                      RouteName.newsDetails,
+                      arguments: news,
+                    );
+                  },
+                );
+              },
             ),
-          );
-        },
-      ),
-     
     );
   }
 }

@@ -8,9 +8,12 @@ class NewsList extends StatelessWidget {
       this.subheading,
       this.newSource,
       this.time,
+        required this.news,
       this.onTap});
 
   final Widget? image;
+   
+  final NewsModel news;
   final String? heading;
   final String? subheading;
   final String? newSource;
@@ -24,7 +27,13 @@ class NewsList extends StatelessWidget {
       padding: EdgeInsets.only(bottom: size.width * 0.05),
       child: GestureDetector(
         onTap: () {
-          onTap ?? Navigator.pushNamed(context, RouteName.politics);
+         onTap != null
+    ? onTap!()
+    : Navigator.pushNamed(
+        context,
+        RouteName.newsDetails,
+        arguments: news,
+      );
         },
         child: Row(
           children: [

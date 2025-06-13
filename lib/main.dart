@@ -9,14 +9,13 @@ import 'package:capstone_news_app/route/app_route.dart';
 import 'package:capstone_news_app/route/route.dart';
 import 'package:capstone_news_app/route/routename.dart';
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:path_provider/path_provider.dart';
+import 'models/news.model.dart';
 
-void main() {
-  runApp(MultiBlocProvider(
-      providers:[
-      BlocProvider(create: (_) => AuthCubit(AuthRepo())),
-      BlocProvider(create: (_) => NewsCubit(NewsRepo()))],
-      child: const MyApp()));
+void main() async {
+ 
 
 }
 
@@ -28,7 +27,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'UpNext',
-      initialRoute: RouteName.bottomNav,
+      initialRoute: RouteName.signIn,
       navigatorKey: AppRoute.navigatorKey,
       onGenerateRoute: Routes.generateRoute,
       debugShowCheckedModeBanner: false,

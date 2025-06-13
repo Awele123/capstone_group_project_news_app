@@ -8,7 +8,7 @@ import 'package:capstone_news_app/cubits/news_cubit.dart';
 import 'package:capstone_news_app/repos/news_repo.dart';
 import 'package:capstone_news_app/global_widgets/app_text.dart';
 import 'package:capstone_news_app/global_widgets/app_textfield.dart';
-import 'package:capstone_news_app/models/news.models.dart';
+import 'package:capstone_news_app/models/news.model.dart';
 import 'package:capstone_news_app/pages/widgets/homewidgets/src/news_details.dart';
 import 'package:capstone_news_app/route/routename.dart';
 //import 'package:capstone_news_app/pages/widgets/homewidgets/src/bottom_nav.dart';
@@ -39,6 +39,7 @@ class _HomepageState extends State<Homepage> {
 
   @override
   Widget build(BuildContext context) {
+    
     final List<Map<String, String>> carouselItems = [
       {
         'image': HomeImages.footballer,
@@ -112,14 +113,54 @@ class _HomepageState extends State<Homepage> {
                   ],
                 ),
                 actions: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Icon(Icons.notifications_outlined),
-                      SizedBox(width: size.width * 0.02),
-                      Icon(Icons.menu),
-                      SizedBox(width: size.width * 0.02),
-                    ],
+                  Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Icon(Icons.notifications_outlined),
+                        SizedBox(width: size.width * 0.02),
+                        GestureDetector(
+                          onTapDown: (TapDownDetails details) async {
+                            final selected = await showMenu<String>(
+                              context: context,
+                              position: RelativeRect.fromLTRB(
+                                details.globalPosition.dx,
+                                details.globalPosition.dy,
+                                0,
+                                0,
+                              ),
+                              items: [
+                                PopupMenuItem<String>(
+                                  // value: 'Politics',
+                                  child: Text('Politics'),
+                                  onTap: (){
+                                    
+                                  },
+                                ),
+                                PopupMenuItem<String>(
+                                  //value: 'Sports',
+                                  child: Text('Sports'),
+                                ),
+                                PopupMenuItem<String>(
+                                  //value: 'Entertainment',
+                                  child: Text('Entertainment'),
+                                ),
+                              ],
+                            );
+                    
+                            if (selected != null) {
+                              // Handle selection (you can navigate or filter content here)
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(content: Text('Selected: $selected')),
+                              );
+                            }
+                          },
+                          child: Icon(Icons.menu),
+                          // SizedBox(width: size.width * 0.02),
+                        )
+                      ],
+                    ),
                   )
                 ],
               ),
@@ -176,7 +217,7 @@ class _HomepageState extends State<Homepage> {
                             textSize: 12,
                             fontWeight: FontWeight.bold,
                           ),
-                            AppText(
+                          AppText(
                             text: 'Entertainment',
                             textSize: 12,
                             fontWeight: FontWeight.bold,
@@ -199,7 +240,7 @@ class _HomepageState extends State<Homepage> {
                         CarouselSlider.builder(
                           itemCount: newsList.length,
                           itemBuilder: (context, index, realIndex) {
-                             final news = newsList[index];
+                            final news = newsList[index];
                             final imageUrl = news.image;
                             final text = news.title;
                             return Stack(
@@ -269,8 +310,10 @@ class _HomepageState extends State<Homepage> {
                               ? timeago.format(news.updatedAt!)
                               : '';
                           return NewsList(
+                            news: newsList[index],
                             image: Image.network(
                               news.image,
+                             
                               width: size.width * 0.27,
                               height: size.width * 0.27,
                               fit: BoxFit.cover,

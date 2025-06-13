@@ -3,7 +3,7 @@ import 'dart:developer';
 
 import 'package:capstone_news_app/repos/auth_repo.dart';
 import 'package:capstone_news_app/repos/news_repo.dart';
-import 'package:capstone_news_app/models/news.models.dart';
+import 'package:capstone_news_app/models/news.model.dart';
 import 'package:capstone_news_app/models/user.model.dart';
 import 'package:capstone_news_app/utils/utils.dart';
 import 'package:equatable/equatable.dart';
@@ -12,8 +12,10 @@ part 'news_state.dart';
 
 class NewsCubit extends Cubit<NewsState>{
   final NewsRepo newsRepo;
+   List<NewsModel> _bookmarkedNews = [];
     NewsCubit(this.newsRepo) : super(NewsInitialState());
-   
+  
+
   Future<void> fetchNews() async {
     emit(NewsFetchingState());
     try {
@@ -52,4 +54,22 @@ class NewsCubit extends Cubit<NewsState>{
       log('notupdate$e');
     }
   }
+  
+ void toggleBookmark(NewsModel news) {
+    if (_bookmarkedNews.any((n) => n.id == news.id)) {
+      _bookmarkedNews.removeWhere((n) => n.id == news.id);
+    } else {
+      _bookmarkedNews.add(news);
+    }
+    emit(BookmarkedNewsUpdated(_bookmarkedNews));
+  }
+    void getBookmarkedNews() {
+    emit(BookmarkedNewsUpdated(_bookmarkedNews));
+  }
+
+ 
+  bool isBookmarked(NewsModel news) {
+    return _bookmarkedNews.any((n) => n.id == news.id);
+  }
+   List<NewsModel> get bookmarkedNews => _bookmarkedNews;
 }

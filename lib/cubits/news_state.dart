@@ -35,3 +35,11 @@ final class NewsRefreshingState extends NewsState {}
 final class FailedToSaveState extends NewsState {
  
 }
+final class BookmarkedNewsUpdated extends NewsState {
+  final List<NewsModel> bookmarked;
+  const BookmarkedNewsUpdated(this.bookmarked);
+
+  @override
+  List<Object> get props => [bookmarked];
+}
+final class NoBookmarkedNewsState extends NewsState {}
