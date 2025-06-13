@@ -9,13 +9,14 @@ import 'package:capstone_news_app/route/app_route.dart';
 import 'package:capstone_news_app/route/route.dart';
 import 'package:capstone_news_app/route/routename.dart';
 import 'package:flutter/material.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:path_provider/path_provider.dart';
-import 'models/news.model.dart';
 
-void main() async {
- 
+void main() {
+  runApp(MultiBlocProvider(
+      providers:[
+      BlocProvider(create: (_) => AuthCubit(AuthRepo())),
+      BlocProvider(create: (_) => NewsCubit(NewsRepo()))],
+      child: const MyApp()));
 
 }
 
