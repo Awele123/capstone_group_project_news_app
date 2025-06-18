@@ -39,34 +39,7 @@ class _HomepageState extends State<Homepage> {
 
   @override
   Widget build(BuildContext context) {
-    
-    final List<Map<String, String>> carouselItems = [
-      {
-        'image': HomeImages.footballer,
-        'text': 'Super Oshimen Scores Again!',
-      },
-      {
-        'image': HomeImages.footballer2,
-        'text': 'Footballer Stars Shine Globally',
-      },
-      {
-        'image': HomeImages.dangote,
-        'text': 'Dangote’s Empire Expands',
-      },
-      {
-        'image': HomeImages.davido,
-        'text': 'Davido Drops New Album',
-      },
-      {
-        'image': HomeImages.riri,
-        'text': 'Rihanna speaks on making babies instead of music',
-      },
-      {
-        'image': HomeImages.tinubu,
-        'text': 'President Tinubu Heads to Paris amid nationwide crisis',
-      },
-    ];
-
+   
     final size = MediaQuery.sizeOf(context);
     final watchauth = context.watch<AuthCubit>();
     String fullName = watchauth.user.name ?? '';
@@ -120,6 +93,17 @@ class _HomepageState extends State<Homepage> {
                       children: [
                         Icon(Icons.notifications_outlined),
                         SizedBox(width: size.width * 0.02),
+
+// PopupMenuButton<String>(
+//                           icon: Icon(Icons.menu),
+//                           onSelected: (String selected) {
+//                             switch (selected) {
+//                               case 'Politics':
+// Navigator.push(context, MaterialPageRoute(builder: (context)=> PoliticsScreen()))
+
+//                             }
+//                           },
+
                         GestureDetector(
                           onTapDown: (TapDownDetails details) async {
                             final selected = await showMenu<String>(
@@ -134,9 +118,7 @@ class _HomepageState extends State<Homepage> {
                                 PopupMenuItem<String>(
                                   // value: 'Politics',
                                   child: Text('Politics'),
-                                  onTap: (){
-                                    
-                                  },
+                                  onTap: () {},
                                 ),
                                 PopupMenuItem<String>(
                                   //value: 'Sports',
@@ -146,9 +128,17 @@ class _HomepageState extends State<Homepage> {
                                   //value: 'Entertainment',
                                   child: Text('Entertainment'),
                                 ),
+                                PopupMenuItem<String>(
+                                  //value: 'Arts',
+                                  child: Text('Arts'),
+                                ),
+                                PopupMenuItem<String>(
+                                  //value: 'Documentaries',
+                                  child: Text('Documentaries'),
+                                ),
                               ],
                             );
-                    
+
                             if (selected != null) {
                               // Handle selection (you can navigate or filter content here)
                               ScaffoldMessenger.of(context).showSnackBar(
@@ -179,33 +169,30 @@ class _HomepageState extends State<Homepage> {
                     ),
                     Padding(
                       padding: EdgeInsets.symmetric(
-                        horizontal: size.width * 0.06,
+                       // horizontal: size.width * 0.06,
                         vertical: size.width * 0.05,
                       ),
                       child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Stack(
-                              clipBehavior: Clip.none,
-                              children: [
-                                AppText(
-                                  text: 'Trending',
-                                  fontWeight: FontWeight.bold,
-                                  textSize: 12,
-                                  color: AppColors.activeIndicatorColor,
-                                ),
-                                Positioned(
-                                  bottom: -4,
-                                  left: 0,
-                                  right: 0,
-                                  child: Container(
-                                      height: 2,
-                                      color: AppColors.activeIndicatorColor),
-                                ),
-                              ],
-                            ),
+                          Stack(
+                            clipBehavior: Clip.none,
+                            children: [
+                              AppText(
+                                text: 'Trending',
+                                fontWeight: FontWeight.bold,
+                                textSize: 11.5,
+                                color: AppColors.activeIndicatorColor,
+                              ),
+                              Positioned(
+                                bottom: -4,
+                                left: 0,
+                                right: 0,
+                                child: Container(
+                                    height: 2,
+                                    color: AppColors.activeIndicatorColor),
+                              ),
+                            ],
                           ),
                           AppText(
                             text: 'Politics',
@@ -313,7 +300,6 @@ class _HomepageState extends State<Homepage> {
                             news: newsList[index],
                             image: Image.network(
                               news.image,
-                             
                               width: size.width * 0.27,
                               height: size.width * 0.27,
                               fit: BoxFit.cover,

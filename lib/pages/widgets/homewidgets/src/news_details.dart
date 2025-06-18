@@ -159,18 +159,18 @@ class _NewsDetailsState extends State<NewsDetails> {
                       children: [
                         GestureDetector(
                           onTap: () {
-                            context
-                                .read<NewsCubit>()
-                                .toggleBookmark(widget.news);
-
+                            final cubit = context.read<NewsCubit>();
+                            cubit.toggleBookmark(widget.news);
+                            final updatedStatus =
+                                cubit.isBookmarked(widget.news);
                             setState(() {
-                              isBookmarked = !isBookmarked;
+                              isBookmarked = updatedStatus;
                             });
 
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
                                 duration: const Duration(seconds: 1),
-                                content: Text(isBookmarked
+                                content: Text(updatedStatus
                                     ? 'Added to Bookmarks'
                                     : 'Removed from Bookmarks'),
                               ),

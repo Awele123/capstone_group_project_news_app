@@ -17,7 +17,6 @@ void main() {
       BlocProvider(create: (_) => AuthCubit(AuthRepo())),
       BlocProvider(create: (_) => NewsCubit(NewsRepo()))],
       child: const MyApp()));
-
 }
 
 class MyApp extends StatelessWidget {
@@ -28,7 +27,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'UpNext',
-      initialRoute: RouteName.signIn,
+      initialRoute: RouteName.bottomNav,
       navigatorKey: AppRoute.navigatorKey,
       onGenerateRoute: Routes.generateRoute,
       debugShowCheckedModeBanner: false,

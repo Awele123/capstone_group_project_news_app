@@ -1,8 +1,8 @@
-import 'package:capstone_news_app/constants/home_images.dart';
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-
-
+import 'package:video_player/video_player.dart';
 
 class Live extends StatefulWidget {
   const Live({super.key});
@@ -12,9 +12,48 @@ class Live extends StatefulWidget {
 }
 
 class _LiveState extends State<Live> {
+  late VideoPlayerController _controller;
+  bool _showPlayPauseIcon = true;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _controller = VideoPlayerController.asset('assets/video/Download.mp4');
+     
+
+    _controller.addListener(() {
+      log("Controller isPlaying: ${_controller.value.isPlaying}");
+      if (_controller.value.hasError) {
+        print('Video error: ${_controller.value.errorDescription}');
+      }
+    });
+
+    _controller.initialize().then((_) {
+         _controller.setLooping(false);
+      setState(() {});
+    });
+  }
+
+
+  void _togglePlayPause()  {
+   setState(() {
+      if (!_controller.value.isInitialized) return;
+     log("Controller isPlaying before toggle: ${_controller.value.isPlaying}");
+    if (_controller.value.isPlaying) {
+       _controller.pause();
+      log("Tapped: now paused");
+    } else {
+      _controller.play();
+      log("Tapped: now playing}");
+    }
+
+   });
+
+  }
+
   @override
   Widget build(BuildContext context) {
-    
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -24,8 +63,7 @@ class _LiveState extends State<Live> {
           children: [
             Text(
               'Live',
-              style: 
-              GoogleFonts.poppins(
+              style: GoogleFonts.poppins(
                 color: Colors.red,
                 fontWeight: FontWeight.bold,
               ),
@@ -40,12 +78,10 @@ class _LiveState extends State<Live> {
           Row(
             children: [
               IconButton(
-               icon:  const Icon(
-                  Icons.search_outlined,), onPressed: () {
-                   
-                  },
+                icon: const Icon(Icons.search_outlined),
+                onPressed: () {},
               ),
-              const SizedBox(width: 20.0,),
+              const SizedBox(width: 20.0),
               const Icon(
                 Icons.notifications_none,
                 color: Colors.black,
@@ -66,74 +102,40 @@ class _LiveState extends State<Live> {
                 fontWeight: FontWeight.w500,
               ),
             ),
-            const SizedBox(
-              height: 16,
-            ),
-            Stack(
-  children: [
-    ClipRRect(
-      borderRadius: BorderRadius.circular(12),
-      child: Image.asset(HomeImages.liveImage,
-        height: 400, // Increased height
-        width: double.infinity,
-        fit: BoxFit.cover,
-      ),
-    ),
-    // Optional: dark gradient to improve text readability
-    Container(
-      height: 400,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(12),
-        gradient: LinearGradient(
-          begin: Alignment.bottomCenter,
-          end: Alignment.topCenter,
-          colors: [
-            Colors.black.withOpacity(0.6),
-            Colors.transparent,
-          ],
-        ),
-      ),
-    ),
-    // Play icon and text on image
-    const Positioned.fill(
-      child: Padding(
-        padding: EdgeInsets.all(16.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(
-              Icons.play_circle_outline,
-              size: 64,
-              color: Colors.white,
-            ),
-            SizedBox(height: 50),
-            Text(
-              maxLines: 3,
-              'AMVCA: Watch live feeds as Nigeria Celebrities stun in great fashion and style',
-              textAlign: TextAlign.center,
-              style: 
-              TextStyle(
-                fontSize: 18, // Larger font
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-                shadows: [Shadow(blurRadius: 4, color: Colors.black)],
-              ),
-            ),
-          ],
-        ),
-      ),
-    ),
-  ],
-),
+            const SizedBox(height: 16),
+            _controller.value.isInitialized
+                ? GestureDetector(
+                    behavior: HitTestBehavior.translucent,
+                    onTap: () => _togglePlayPause(),
+                    child: Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(12),
+                          child: AspectRatio(
+                            aspectRatio: _controller.value.aspectRatio,
+                            child: VideoPlayer(_controller),
+                          ),
+                        ),
+                        if (_showPlayPauseIcon)
+                          const Icon(
+                            Icons.play_circle_outline,
+                            size: 100,
+                            color: Colors.white,
+                          ),
+                      ],
+                    ),
+                  )
+                : Container(
+                    height: 200,
+                    alignment: Alignment.center,
+                    child: const CircularProgressIndicator(),
+                  ),
 
             const SizedBox(height: 24),
             Container(
               margin: const EdgeInsets.only(bottom: 16),
               decoration: const BoxDecoration(
-                // border: Border.all(
-                //     color: Color(0xFF5BBFD9),
-                //     width: 2),
-                //borderRadius: BorderRadius.circular(12),
                 color: Colors.white,
               ),
               padding: const EdgeInsets.all(12),
@@ -145,8 +147,7 @@ class _LiveState extends State<Live> {
                     children: [
                       Text(
                         'Live NOW',
-                        style:
-                         TextStyle(
+                        style: TextStyle(
                             color: Colors.red, fontWeight: FontWeight.bold),
                       ),
                     ],
@@ -154,125 +155,103 @@ class _LiveState extends State<Live> {
                   const SizedBox(height: 4),
                   Row(
                     children: [
-                      Image.asset(HomeImages.realMadrid,width: 60.0,),
+                      // Replace with your image if needed
+                      Container(
+                        width: 60,
+                        height: 60,
+                        color: Colors.grey.shade300,
+                      ),
+                      const SizedBox(width: 10),
                       const Text(
-                        'Real Mardrid VS Barcelona',
+                        'Real Madrid VS Barcelona',
                         style: TextStyle(
                           fontSize: 25,
                           fontWeight: FontWeight.w600,
-                          
                         ),
                       ),
-                      Image.asset(HomeImages.barcelona,width:50.0,)
-                    ],
-                  ),
-
-                  //SizedBox(height: 2,),
-                  const Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Text(
-                        'La Liga',
-                        style: TextStyle(color: Color(0xFF5BBFD9)),
-                      ),
-                      //Spacer(),
-                      Text(
-                        '11/05/2025 (15:15 pm)',
-                        style: TextStyle(color: Color(0xFF5BBFD9)),
+                      const SizedBox(width: 10),
+                      Container(
+                        width: 50,
+                        height: 50,
+                        color: Colors.grey.shade300,
                       ),
                     ],
                   ),
-                ],
-              ),
-            ),
-            Container(
-              margin: const EdgeInsets.only(bottom: 16),
-              
-              decoration: BoxDecoration(
-                border: Border.all(color: const Color.fromARGB(255, 225, 233, 235),
-                ),
-                borderRadius: BorderRadius.circular(12),
-                color: Colors.white
-              ),
-              child: const Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text('Live NOW', 
-                  style: TextStyle(color: Colors.red,fontWeight: FontWeight.bold),
-                  ),
-                  Column(
+                  const Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      Row(mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text('President Tinubu National address',
-                          style: TextStyle(
-                              fontSize: 25,
-                              fontWeight: FontWeight.w600,
-                            ),),
-                        ],
-                      ),
-                      //SizedBox(height: 2,),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: [
-                                Text('Arise Tv',
-                                 style: TextStyle(color: Color(0xFF5BBFD9)),),
-                                //Spacer(),
-                                Text('31/05/2025 (07:00 pm)',
-                                 style: TextStyle(color: Color(0xFF5BBFD9)),),
-                              ],
-                            )
-                    ],
-                  )
-                ],
-              ),
-            ),
-            Container(
-              margin: const EdgeInsets.only(bottom: 16),
-              
-              decoration: BoxDecoration(
-                border: Border.all(color: const Color.fromARGB(255, 225, 233, 235),
-                ),
-                borderRadius: BorderRadius.circular(12),
-                color: Colors.white
-              ),
-              child: const Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text('Live NOW',
-                  style: TextStyle(color: Colors.red,fontWeight: FontWeight.bold),
-                  ),
-                  Column(
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Text('A New pope has been elected',
-                        style: TextStyle(
-                              fontSize: 25,
-                              fontWeight: FontWeight.w600,
-                            ),
-                        ),
-                      ],
-                        
-                      ),
-                       Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: [
-                                Text('For News',
-                                 style: TextStyle(color: Color(0xFF5BBFD9)),),
-                                //Spacer(),
-                                Text('12/05/2025 (11:00 pm)',
-                                 style: TextStyle(color: Color(0xFF5BBFD9)),),
-                              ],
-                            )
+                      Text('La Liga',
+                          style: TextStyle(color: Color(0xFF5BBFD9))),
+                      Text('11/05/2025 (15:15 pm)',
+                          style: TextStyle(color: Color(0xFF5BBFD9))),
                     ],
                   ),
                 ],
               ),
             ),
 
+            // Additional Live Cards (unchanged from your original)
+            buildLiveCard(
+              title: 'President Tinubu National address',
+              channel: 'Arise Tv',
+              time: '31/05/2025 (07:00 pm)',
+            ),
+            buildLiveCard(
+              title: 'A New pope has been elected',
+              channel: 'For News',
+              time: '12/05/2025 (11:00 pm)',
+            ),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget buildLiveCard({
+    required String title,
+    required String channel,
+    required String time,
+  }) {
+    return Container(
+      margin: const EdgeInsets.only(bottom: 16),
+      decoration: BoxDecoration(
+        border: Border.all(color: const Color.fromARGB(255, 225, 233, 235)),
+        borderRadius: BorderRadius.circular(12),
+        color: Colors.white,
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const Text(
+            'Live NOW',
+            style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
+          ),
+          Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    title,
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(
+                      fontSize: 25,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Text(channel,
+                      style: const TextStyle(color: Color(0xFF5BBFD9))),
+                  Text(time, style: const TextStyle(color: Color(0xFF5BBFD9))),
+                ],
+              ),
+            ],
+          )
+        ],
       ),
     );
   }

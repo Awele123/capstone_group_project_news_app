@@ -1,32 +1,15 @@
-import 'package:hive/hive.dart';
 import 'package:equatable/equatable.dart';
 
-//part 'news.model.g.dart'; 
+//part 'news.model.g.dart';
 
-@HiveType(typeId: 0)
 class NewsModel extends Equatable {
-  @HiveField(0)
   final String id;
-
-  @HiveField(1)
   final String title;
-
-  @HiveField(2)
   final String content;
-
-  @HiveField(3)
   final String image;
-
-  @HiveField(4)
   final String category;
-
-  @HiveField(5)
   final int views;
-
-  @HiveField(6)
   final DateTime createdAt;
-
-  @HiveField(7)
   final DateTime updatedAt;
 
   const NewsModel({
