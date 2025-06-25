@@ -4,7 +4,10 @@ import 'package:capstone_news_app/cubits/auth_cubit.dart';
 import 'package:capstone_news_app/global_widgets/app_button.dart';
 import 'package:capstone_news_app/global_widgets/app_text.dart';
 import 'package:capstone_news_app/global_widgets/app_textfield.dart';
+import 'package:capstone_news_app/pages/authentication/sign_in.dart';
 import 'package:capstone_news_app/pages/home/save/save.dart';
+import 'package:capstone_news_app/pages/widgets/homewidgets/src/bottom_nav.dart';
+import 'package:capstone_news_app/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -39,13 +42,40 @@ class _ProfileState extends State<Profile> {
     final watchauth = context.watch<AuthCubit>();
     final size = MediaQuery.sizeOf(context);
 
-    return Scaffold(
+    return BlocListener<AuthCubit, AuthenticationState>(listener: (context, state) {
+      if (state is LoggedOutState) {
+        Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_) => SignIn()), 
+        (route) => false,
+        );
+      }
+      if (state is AuthErrorState) {
+        Utils.showTopSnackBar(message: state.error);
+      }
+    },
+    child: Scaffold(
+      // appBar: AppBar(
+      //   leading: IconButton(onPressed: () {
+      //     Navigator.push(context, MaterialPageRoute(builder: (context) => BottomNav()));
+      //   }, icon: Icon(Icons.arrow_back)),
+      // ),
+      //  GestureDetector(
+      //                 onTap: () => Navigator.push(
+      //                   context, MaterialPageRoute(builder: (context) => BottomNav())
+      //                 ),
+      //                 child: const Icon(
+      //                   Icons.arrow_back,
+      //                   color: Colors.black,
+      //                   size: 20,
+      //                 ),
+      //               ),
       backgroundColor: const Color.fromARGB(255, 230, 224, 224),
       body: Column(
         children: [
+          
           Stack(
             alignment: Alignment.center,
             children: [
+            
               Container(
                 height: 250,
                 decoration: BoxDecoration(
@@ -56,7 +86,19 @@ class _ProfileState extends State<Profile> {
                 ),
               ),
               Positioned(
-                bottom: 0,
+                top: 40,
+                left: 16,
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => BottomNav()));
+                  },
+                  child: CircleAvatar(
+                    backgroundColor: Colors.black54,
+                    child: Icon(Icons.arrow_back, color: Colors.white),
+                  ),
+                )),
+              Positioned(
+                bottom: -5,
                 child: CircleAvatar(
                   radius: 50,
                   backgroundImage: AssetImage(HomeImages.avatar),
@@ -104,11 +146,13 @@ class _ProfileState extends State<Profile> {
                         children: [
                           Icon(Icons.email, color: AppColors.bookMarkColor),
                           SizedBox(width: size.width * 0.03),
-                          AppText(
-                            text: '${watchauth.user.email}',
-                            textSize: 22,
-                            color: AppColors.lightGreyColor,
-                            fontWeight: FontWeight.bold,
+                          Expanded(
+                            child: AppText(
+                              text: '${watchauth.user.email}',
+                              textSize: 22,
+                              color: AppColors.lightGreyColor,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ],
                       ),
@@ -138,7 +182,12 @@ class _ProfileState extends State<Profile> {
                       ),
                     ),
                     SizedBox(height: 20),
-                    _buildInfoCard(
+                    GestureDetector(
+                      onTap: () {
+                      context.read<AuthCubit>().logout();
+   
+                      },
+                      child: _buildInfoCard(
                       size,
                       Row(
                         children: [
@@ -152,6 +201,8 @@ class _ProfileState extends State<Profile> {
                         ],
                       ),
                     ),
+                    ),
+                    
                     SizedBox(height: 40),
                     AppButton(
                       width: 70.0,
@@ -171,7 +222,7 @@ class _ProfileState extends State<Profile> {
           ),
         ],
       ),
-    );
+    ));
   }
 
   Widget _buildInfoCard(Size size, Widget child) {
@@ -192,3 +243,4 @@ class _ProfileState extends State<Profile> {
     );
   }
 }
+    

@@ -6,6 +6,7 @@ import 'package:capstone_news_app/models/news.model.dart';
 import 'package:capstone_news_app/route/routename.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:timeago/timeago.dart' as timeago;
 
 class NewsDetails extends StatefulWidget {
   final ImageProvider? imageheader;
@@ -53,7 +54,9 @@ class _NewsDetailsState extends State<NewsDetails> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.sizeOf(context);
-
+final formattedTime = widget.news.updatedAt != null
+                              ? timeago.format(widget.news.updatedAt!)
+                              : '';
     return Scaffold(
         extendBodyBehindAppBar: true,
         body: SingleChildScrollView(
@@ -127,63 +130,57 @@ class _NewsDetailsState extends State<NewsDetails> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    widget.newsLogo ??
-                        Image.asset(
-                          HomeImages.vanLogo,
-                          height: size.height * 0.06,
-                          width: size.width * 0.1,
-                        ),
-                    SizedBox(width: size.width * 0.02),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        AppText(
-                          text: widget.newsSource ?? 'The Vanguard',
-                          textSize: 10,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black,
-                        ),
-                        SizedBox(height: size.height * 0.005),
-                        AppText(
-                          text: widget.newsTime ?? '24hrs ago',
-                          textSize: 8,
-                          fontWeight: FontWeight.w200,
-                          color: Colors.black,
-                        ),
-                      ],
-                    ),
+                    Row(children: [
+                      widget.newsLogo ??
+                          Image.asset(
+                            HomeImages.vanLogo,
+                            height: size.height * 0.06,
+                            width: size.width * 0.1,
+                          ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          AppText(
+                            text: widget.newsSource ?? 'UpNext',
+                            textSize: 10,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black,
+                          ),
+                          SizedBox(height: size.height * 0.005),
+                          AppText(
+                            text: formattedTime ,
+                            textSize: 8,
+                            fontWeight: FontWeight.w200,
+                            color: Colors.black,
+                          ),
+                        ],
+                      ),
+                    ]),
                     SizedBox(
                       width: size.width * 0.02,
                     ),
-                    Row(
-                      children: [
-                        GestureDetector(
-                          onTap: () {
-                            final cubit = context.read<NewsCubit>();
-                            cubit.toggleBookmark(widget.news);
-                            final updatedStatus =
-                                cubit.isBookmarked(widget.news);
-                            setState(() {
-                              isBookmarked = updatedStatus;
-                            });
+                    GestureDetector(
+                      onTap: () {
+                        final cubit = context.read<NewsCubit>();
+                        cubit.toggleBookmark(widget.news);
+                        final updatedStatus = cubit.isBookmarked(widget.news);
+                        setState(() {
+                          isBookmarked = updatedStatus;
+                        });
 
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                duration: const Duration(seconds: 1),
-                                content: Text(updatedStatus
-                                    ? 'Added to Bookmarks'
-                                    : 'Removed from Bookmarks'),
-                              ),
-                            );
-                          },
-                          child: Icon(
-                            isBookmarked
-                                ? Icons.bookmark
-                                : Icons.bookmark_border,
-                            color: AppColors.bookMarkColor,
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            duration: const Duration(seconds: 1),
+                            content: Text(updatedStatus
+                                ? 'Added to Bookmarks'
+                                : 'Removed from Bookmarks'),
                           ),
-                        ),
-                      ],
+                        );
+                      },
+                      child: Icon(
+                        isBookmarked ? Icons.bookmark : Icons.bookmark_border,
+                        color: AppColors.bookMarkColor,
+                      ),
                     ),
                   ],
                 ),

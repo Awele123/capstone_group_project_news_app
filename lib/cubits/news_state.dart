@@ -24,17 +24,10 @@ final class NewsFetchedState extends NewsState {
   @override
   List<Object> get props => [news];
 }
-
 final class NewsInitialState extends NewsState {}
-final class NewsSavingState extends NewsState {
-  
-}
+final class NewsSavingState extends NewsState {}
 final class NewsSavedState extends NewsState {}
-
-final class NewsRefreshingState extends NewsState {}
-final class FailedToSaveState extends NewsState {
- 
-}
+final class FailedToSaveState extends NewsState {}
 final class BookmarkedNewsUpdated extends NewsState {
   final List<NewsModel> bookmarked;
   const BookmarkedNewsUpdated(this.bookmarked);
@@ -42,4 +35,3 @@ final class BookmarkedNewsUpdated extends NewsState {
   @override
   List<Object> get props => [bookmarked];
 }
-final class NoBookmarkedNewsState extends NewsState {}

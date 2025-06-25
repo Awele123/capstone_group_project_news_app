@@ -1,5 +1,6 @@
 import 'package:capstone_news_app/constants/home_images.dart';
 import 'package:capstone_news_app/global_widgets/app_text.dart';
+import 'package:capstone_news_app/pages/widgets/homewidgets/src/bottom_nav.dart';
 import 'package:flutter/material.dart';
 
 // void main() => runApp(NewsExploreApp());
@@ -41,7 +42,9 @@ class Search extends StatelessWidget {
         centerTitle: true,
         backgroundColor: Color(0xFFFFFFFF),
         elevation: 0,
-        // leading: Icon(Icons.arrow_back, color: Color(0xFF000000)),
+         leading:IconButton(icon: Icon(Icons.arrow_back),onPressed: () {
+           Navigator.push(context, MaterialPageRoute(builder: (context) => BottomNav()));
+         },) //Icon(Icons.arrow_back, color: Color(0xFF000000)),
         // actions: [Icon(Icons.notifications_none, color: Color(0xFF000000))],
       ),
       backgroundColor: Color(0xFFFFFFFF),

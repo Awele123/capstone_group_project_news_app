@@ -95,11 +95,9 @@ class AuthRepo {
 
     final response = await http.put(
       url,
-      headers: {'Content-Type': 'application/json' ,'Authorization': 'Bearer $token',},
-      
+      headers: Headers.authHeader("$token"),
       body: jsonEncode(data),
     );
-
     return response;
   }
 
@@ -107,7 +105,15 @@ class AuthRepo {
     final url = Uri.parse(ApiConstants.saveNews('643b8f1c4d2a0e3f5c9b7e6d'));
     final response = await http.post(
       url,
-      headers: {'Content-Type': 'application/json'},
+      headers:  Headers.unAuthHeader(),
+    );
+    return response;
+  }
+   Future<http.Response> logout() async {
+    final url = Uri.parse(ApiConstants.logout);
+    final response = await http.post(
+      url,
+      headers:  Headers.unAuthHeader(),
     );
     return response;
   }

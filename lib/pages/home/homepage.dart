@@ -5,6 +5,9 @@ import 'package:capstone_news_app/constants/home_images.dart';
 import 'package:capstone_news_app/constants/nav_images.dart';
 import 'package:capstone_news_app/cubits/auth_cubit.dart';
 import 'package:capstone_news_app/cubits/news_cubit.dart';
+import 'package:capstone_news_app/pages/home/profile/profile.dart';
+import 'package:capstone_news_app/pages/widgets/menu_bar/about.dart';
+import 'package:capstone_news_app/pages/widgets/menu_bar/terms_cond.dart';
 import 'package:capstone_news_app/repos/news_repo.dart';
 import 'package:capstone_news_app/global_widgets/app_text.dart';
 import 'package:capstone_news_app/global_widgets/app_textfield.dart';
@@ -29,6 +32,7 @@ class Homepage extends StatefulWidget {
 }
 
 bool isBookmarked = false;
+bool showAllRecommendations = false;
 
 class _HomepageState extends State<Homepage> {
   @override
@@ -39,7 +43,6 @@ class _HomepageState extends State<Homepage> {
 
   @override
   Widget build(BuildContext context) {
-   
     final size = MediaQuery.sizeOf(context);
     final watchauth = context.watch<AuthCubit>();
     String fullName = watchauth.user.name ?? '';
@@ -117,25 +120,37 @@ class _HomepageState extends State<Homepage> {
                               items: [
                                 PopupMenuItem<String>(
                                   // value: 'Politics',
-                                  child: Text('Politics'),
-                                  onTap: () {},
+                                  child: Text('Profile'),
+                                  onTap: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => Profile()));
+                                  },
                                 ),
                                 PopupMenuItem<String>(
                                   //value: 'Sports',
-                                  child: Text('Sports'),
+                                  child: Text('About'),
+                                  onTap: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                AboutScreen()));
+                                  },
                                 ),
                                 PopupMenuItem<String>(
                                   //value: 'Entertainment',
-                                  child: Text('Entertainment'),
+                                  child: Text('Terms'),
+                                  onTap: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                TermsAndConditionsScreen()));
+                                  },
                                 ),
-                                PopupMenuItem<String>(
-                                  //value: 'Arts',
-                                  child: Text('Arts'),
-                                ),
-                                PopupMenuItem<String>(
-                                  //value: 'Documentaries',
-                                  child: Text('Documentaries'),
-                                ),
+                             
                               ],
                             );
 
@@ -169,7 +184,7 @@ class _HomepageState extends State<Homepage> {
                     ),
                     Padding(
                       padding: EdgeInsets.symmetric(
-                       // horizontal: size.width * 0.06,
+                        // horizontal: size.width * 0.06,
                         vertical: size.width * 0.05,
                       ),
                       child: Row(
@@ -211,11 +226,6 @@ class _HomepageState extends State<Homepage> {
                           ),
                           AppText(
                             text: 'Arts',
-                            textSize: 12,
-                            fontWeight: FontWeight.bold,
-                          ),
-                          AppText(
-                            text: 'Documentaries',
                             textSize: 12,
                             fontWeight: FontWeight.bold,
                           ),
@@ -274,11 +284,18 @@ class _HomepageState extends State<Homepage> {
                             textSize: 20,
                             fontWeight: FontWeight.bold,
                           ),
-                          AppText(
-                            text: 'View All',
-                            textSize: 16,
-                            color: AppColors.activeIndicatorColor,
-                            fontWeight: FontWeight.w400,
+                          GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                showAllRecommendations = true;
+                              });
+                            },
+                            child: AppText(
+                              text: 'View All',
+                              textSize: 16,
+                              color: AppColors.activeIndicatorColor,
+                              fontWeight: FontWeight.w400,
+                            ),
                           )
                         ],
                       ),
@@ -290,7 +307,9 @@ class _HomepageState extends State<Homepage> {
                       child: ListView.builder(
                         shrinkWrap: true,
                         physics: NeverScrollableScrollPhysics(),
-                        itemCount: newsList.length >= 3 ? 3 : newsList.length,
+                        itemCount: showAllRecommendations
+                            ? newsList.length
+                            : (newsList.length >= 3 ? 3 : newsList.length),
                         itemBuilder: (context, index) {
                           final news = newsList[index];
                           final formattedTime = news.updatedAt != null

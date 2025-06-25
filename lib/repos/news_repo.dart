@@ -12,10 +12,10 @@ class NewsRepo {
     log("Fetching new with token: $token");
     final response = await http.get(
       url,
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer $token',
-      },
+ 
+      headers:  
+          Headers.authHeader("$token")
+      
     );
 
     return response;
@@ -32,10 +32,7 @@ class NewsRepo {
       body: json.encode({
         'postId': postId,
       }),
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer $token',
-      },
+      headers: Headers.authHeader("$token")
     );
     return response;
   }

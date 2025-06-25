@@ -4,7 +4,7 @@ class HomeImages {
   static const dangote = 'assets/home/dangote.jpeg';
   static const davido = 'assets/home/davido.jpeg';
   static const riri = 'assets/home/rir.jpeg';
-  static const vanLogo = 'assets/home/VanLogo.png';
+  static const vanLogo = 'assets/home/app_icon.jpg';
   static const bolaAhmed = 'assets/home/bolaAhmed.png';
   static const tinubu = 'assets/home/tinubu.jpeg';
   static const joe = 'assets/home/joe.jpg';

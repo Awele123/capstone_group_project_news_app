@@ -11,6 +11,7 @@ class ApiConstants {
   static String get adminLogin => '$baseUrl/api/admin/login';
   static String saveNews(String postId) =>
       '$baseUrl/users/save-post/$postId';
+  static String get logout => '$baseUrl/api/users/logout';
 }
 
 class Headers {

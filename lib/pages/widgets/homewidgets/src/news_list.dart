@@ -56,7 +56,7 @@ class NewsList extends StatelessWidget {
                 children: [
                   AppText(
                     text: heading ?? 'Politics',
-                    textSize: 14,
+                    textSize: 12,
                     color: AppColors.lightGreyColor,
                   ),
                   SizedBox(
@@ -66,7 +66,7 @@ class NewsList extends StatelessWidget {
                     text: subheading ??
                         'President Tinubu jets to Paris amid threatening insecurities in Nigeria',
                     textSize: 16,
-                    maxline: 2,
+                    maxline: 3,
                     fontWeight: FontWeight.bold,
                   ),
                   SizedBox(
@@ -76,17 +76,16 @@ class NewsList extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       AppText(
-                        maxline: 2,
-                        text: newSource ?? 'The Vanguard',
-                        textSize: 14,
+                       
+                        text: newSource ?? 'UpNext',
+                        textSize: 11,
                         color: AppColors.lightGreyColor,
                       ),
                       Padding(
                         padding: EdgeInsets.only(right: size.width * 0.08),
                         child: AppText(
-                          maxline: 2,
                           text: time ?? '24 hours Ago',
-                          textSize: 14,
+                          textSize: 12,
                           color: AppColors.lightGreyColor,
                         ),
                       ),

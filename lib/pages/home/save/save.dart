@@ -4,6 +4,7 @@ import 'package:capstone_news_app/models/news.model.dart';
 import 'package:capstone_news_app/cubits/news_cubit.dart';
 import 'package:capstone_news_app/global_widgets/app_text.dart';
 import 'package:capstone_news_app/route/routename.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class SavedNewsScreen extends StatelessWidget {
   const SavedNewsScreen({super.key});
@@ -22,7 +23,12 @@ class SavedNewsScreen extends StatelessWidget {
                   Navigator.pushNamed(context, RouteName.bottomNav);
                 },
                 child: Icon(Icons.arrow_back)),
-            const Text('Saved Items'),
+                SizedBox(width: 25.0),
+             Text('Saved News',
+            style: GoogleFonts.poppins(
+                color: Colors.black,
+                fontWeight: FontWeight.bold,
+              ),),
           ],
         ),
       ),
@@ -36,7 +42,7 @@ class SavedNewsScreen extends StatelessWidget {
                   leading: ClipRRect(
                       borderRadius: BorderRadius.circular(10),
                       child: Image.network(news.image,
-                          width: 80, height: 80, fit: BoxFit.cover)),
+                          width: 100, height: 100, fit: BoxFit.cover)),
                   title: Text(news.title),
                   subtitle: Text(news.category),
                   onTap: () {

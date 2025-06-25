@@ -12,6 +12,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
 
 part 'auth_state.dart';
 
@@ -305,6 +306,57 @@ class AuthCubit extends Cubit<AuthenticationState> {
       log('notupdate$e');
     }
   }
+
+  Future<bool> logout() async {
+    emit(AuthLoadingState());
+    final url = Uri.parse(ApiConstants.logout);
+    final headers = await Headers.unAuthHeader();
+
+    try {
+      final response = await http.post(url, headers: headers);
+        log('Logout response: ${response.statusCode}');
+
+      // 
+      // 
+        final prefs = await SharedPreferences.getInstance();
+        await AuthUtils().clearBearerToken();
+        await AuthUtils().clearUserInfo();
+        //await prefs.remove('bearer_token');
+        await prefs.remove('loginInfo');
+        await prefs.remove('data');
+        bearerToken = "";
+
+        log('Token and user data removed');
+        if (response.statusCode  == 200) {
+        emit (LoggedOutState());
+        return true;        //successful return
+        }else {
+          emit(AuthErrorState(error: 'Logout failed'));
+          return false;
+        }
+            }
+     catch (e) {
+      emit(AuthErrorState(error: 'Logout error'));
+        log('Logout error:$e');
+        return false;
+        }
+  }
+
+      //   final tokenAfter =prefs.getString('bearer_token');
+      //   log('Token after logout: $tokenAfter'); // should log : null
+      //   //clearTextForms();
+
+      //   emit(AuthenticationInitialState());
+      //   //log ('Logout tapped - starting logout process');
+      //   return true;
+      // } else {
+      //   emit(AuthErrorState(error: 'Logout failed'));
+      //   // log('Logout failed: ${response.statusCode} - ${response.body}');
+      //   // return false;
+      // }
+     
+
+      
 
   // gotoProfileEdit() {
   //   emit(AuthLoadingState());
