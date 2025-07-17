@@ -92,7 +92,7 @@ class AboutScreen extends StatelessWidget {
                   ),
                   GestureDetector(
                     onTap: () => _launchLinkedIn(
-                        'https://www.linkedin.com/in/chidimma-anyanwu-998bab1b5?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app'),
+                        'https://www.linkedin.com/in/chidimma-anyanwu-998bab1b5'),
                     child: const Text(
                       'Linkedin',
                       style: TextStyle(
