@@ -151,7 +151,7 @@ class AboutScreen extends StatelessWidget {
                   GestureDetector(
                     onTap: () => _launchLinkedIn(
                         // add his linkedin link
-                        'https://linkedin.com/in/biotechwizengineer'),
+                        'https://www.linkedin.com/in/adiele-victor-ikedichi-37367628b?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app'),
                     child: const Text(
                       'Linkedin',
                       style: TextStyle(
